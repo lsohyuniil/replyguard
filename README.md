@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RAG Email Support Agent
 
-## Getting Started
+Gmail로 접수된 고객 문의를 주문정보와 정책 문서를 바탕으로 처리하는 AI Agent 프로젝트입니다.
 
-First, run the development server:
+## Workspace
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+.
+├── frontend/        # Next.js 관리 화면
+├── backend/         # FastAPI, LangChain, LangGraph
+├── data/
+│   ├── policies/    # RAG 정책 문서
+│   └── seeds/       # 주문·문의 Mock 데이터
+└── docs/            # 설계와 개발 기록
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run frontend
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd frontend
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Run backend
 
-## Learn More
+Python 3.11 이상을 사용합니다.
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+cp .env.example .env
+uvicorn app.main:app --reload --port 8000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+서버가 실행되면 `GET http://localhost:8000/health`에서 상태를 확인할 수 있습니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Initial MVP
 
-## Deploy on Vercel
+- 문의함, 문의 상세, 승인함, AI 작업 기록, 대시보드
+- Supabase PostgreSQL + pgvector 기반 주문·정책 데이터
+- LangGraph 기반 자동 발송·담당자 확인 분기
+- Gmail API 기반 문의 수신과 답장
+- LangSmith 기반 실행 추적
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
