@@ -1,0 +1,44 @@
+[
+  {
+    "id": "policy_delivery",
+    "category": "DELIVERY",
+    "title": "배송 조회 및 도착 예정일 안내",
+    "versions": [
+      {
+        "id": "policy_version_delivery_1",
+        "version": 1,
+        "status": "ACTIVE",
+        "content": "배송 중인 주문은 택배사 조회 결과와 도착 예정일을 고객에게 안내할 수 있습니다. 주문 식별 또는 배송 조회에 실패하면 자동 발송하지 않습니다.",
+        "published_at": "2026-07-01T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "id": "policy_exchange",
+    "category": "EXCHANGE",
+    "title": "의류 교환 정책",
+    "versions": [
+      {
+        "id": "policy_version_exchange_2",
+        "version": 2,
+        "status": "ACTIVE",
+        "content": "수령 후 7일 이내이며 착용 또는 세탁하지 않은 상품은 사이즈 교환을 요청할 수 있습니다. 희망 사이즈와 착용·세탁 여부를 확인한 뒤 운영자 승인을 받아 처리합니다.",
+        "published_at": "2026-07-02T00:00:00Z"
+      }
+    ]
+  },
+  {
+    "id": "policy_refund",
+    "category": "REFUND",
+    "title": "배송 지연 및 환불 정책",
+    "versions": [
+      {
+        "id": "policy_version_refund_3",
+        "version": 3,
+        "status": "ACTIVE",
+        "content": "배송 지연 중인 상품의 환불은 배송 중단 가능 여부와 회수 비용을 확인한 뒤 운영자 승인을 받아 처리합니다.",
+        "published_at": "2026-07-03T00:00:00Z"
+      }
+    ]
+  }
+]

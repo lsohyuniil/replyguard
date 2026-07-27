@@ -1,0 +1,87 @@
+[
+  {
+    "id": "ord_1001",
+    "order_number": "RG-20260710-1001",
+    "customer_email": "minji.kim@example.com",
+    "status": "SHIPPED",
+    "ordered_at": "2026-07-10T04:20:00Z",
+    "currency": "KRW",
+    "total_amount": 59000,
+    "items": [
+      {"id": "item_1001_1", "sku": "RG-MUG-BLK", "name": "ReplyGuard 머그컵 블랙", "quantity": 2, "unit_price": 18000},
+      {"id": "item_1001_2", "sku": "RG-NOTE-A5", "name": "ReplyGuard A5 노트", "quantity": 1, "unit_price": 23000}
+    ]
+  },
+  {
+    "id": "ord_1002",
+    "order_number": "RG-20260708-1002",
+    "customer_email": "junho.lee@example.com",
+    "status": "COMPLETED",
+    "ordered_at": "2026-07-08T07:45:00Z",
+    "currency": "KRW",
+    "total_amount": 79000,
+    "items": [
+      {"id": "item_1002_1", "sku": "RG-HOOD-GRY-M", "name": "ReplyGuard 후드 그레이 M", "quantity": 1, "unit_price": 79000}
+    ]
+  },
+  {
+    "id": "ord_1003",
+    "order_number": "RG-20260709-1003",
+    "customer_email": "yuna.choi@example.com",
+    "status": "COMPLETED",
+    "ordered_at": "2026-07-09T08:30:00Z",
+    "currency": "KRW",
+    "total_amount": 62000,
+    "items": [
+      {"id": "item_1003_1", "sku": "RG-SHIRT-BLU-S", "name": "ReplyGuard 셔츠 블루 S", "quantity": 1, "unit_price": 62000}
+    ]
+  },
+  {
+    "id": "ord_1004",
+    "order_number": "RG-20260705-1004",
+    "customer_email": "seoyeon.park@example.com",
+    "status": "SHIPPED",
+    "ordered_at": "2026-07-05T11:10:00Z",
+    "currency": "KRW",
+    "total_amount": 49000,
+    "items": [
+      {"id": "item_1004_1", "sku": "RG-TMB-WHT", "name": "ReplyGuard 텀블러 화이트", "quantity": 2, "unit_price": 24500}
+    ]
+  },
+  {
+    "id": "ord_1005",
+    "order_number": "RG-20260711-1005",
+    "customer_email": "haneul.jeong@example.com",
+    "status": "COMPLETED",
+    "ordered_at": "2026-07-11T01:20:00Z",
+    "currency": "KRW",
+    "total_amount": 32000,
+    "items": [
+      {"id": "item_1005_1", "sku": "RG-CAP-NVY", "name": "ReplyGuard 캡 네이비", "quantity": 1, "unit_price": 32000}
+    ]
+  },
+  {
+    "id": "ord_1006",
+    "order_number": "RG-20260713-1006",
+    "customer_email": "haneul.jeong@example.com",
+    "status": "SHIPPED",
+    "ordered_at": "2026-07-13T06:10:00Z",
+    "currency": "KRW",
+    "total_amount": 24000,
+    "items": [
+      {"id": "item_1006_1", "sku": "RG-POUCH-BLK", "name": "ReplyGuard 파우치 블랙", "quantity": 1, "unit_price": 24000}
+    ]
+  },
+  {
+    "id": "ord_1007",
+    "order_number": "RG-20260712-1007",
+    "customer_email": "jihoo.oh@example.com",
+    "status": "SHIPPED",
+    "ordered_at": "2026-07-12T03:40:00Z",
+    "currency": "KRW",
+    "total_amount": 42000,
+    "items": [
+      {"id": "item_1007_1", "sku": "RG-BAG-GRY", "name": "ReplyGuard 에코백 그레이", "quantity": 1, "unit_price": 42000}
+    ]
+  }
+]

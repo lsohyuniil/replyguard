@@ -1,0 +1,143 @@
+[
+  {
+    "id": "inq_delivery_auto_sent",
+    "gmail_connection_id": "gmail_conn_demo",
+    "gmail_thread_id": "thread_delivery_auto_sent",
+    "customer_name": "김민지",
+    "customer_email": "minji.kim@example.com",
+    "subject": "주문한 상품이 어디쯤 왔나요?",
+    "preview": "RG-20260710-1001 주문의 배송 상태를 확인하고 싶습니다.",
+    "intent": "DELIVERY_STATUS",
+    "status": "COMPLETED",
+    "stage": "DONE",
+    "completion_type": "AUTO_SENT",
+    "order_id": "ord_1001",
+    "order_candidate_ids": [],
+    "policy_version_ids": ["policy_version_delivery_1"],
+    "active_agent_run_id": "run_delivery_auto_sent",
+    "required_action": null,
+    "received_at": "2026-07-16T00:12:00Z",
+    "updated_at": "2026-07-16T00:12:08Z"
+  },
+  {
+    "id": "inq_exchange_waiting_customer",
+    "gmail_connection_id": "gmail_conn_demo",
+    "gmail_thread_id": "thread_exchange_waiting_customer",
+    "customer_name": "이준호",
+    "customer_email": "junho.lee@example.com",
+    "subject": "사이즈 교환하고 싶어요",
+    "preview": "후드 사이즈를 교환하고 싶은데 어떻게 하면 되나요?",
+    "intent": "EXCHANGE",
+    "status": "IN_PROGRESS",
+    "stage": "WAITING_CUSTOMER",
+    "completion_type": null,
+    "order_id": "ord_1002",
+    "order_candidate_ids": [],
+    "policy_version_ids": ["policy_version_exchange_2"],
+    "active_agent_run_id": "run_exchange_waiting_customer",
+    "required_action": {
+      "type": "WAIT_FOR_CUSTOMER",
+      "label": "고객 회신 대기",
+      "requested_fields": ["desired_size", "worn_or_washed"],
+      "attempt": 1
+    },
+    "received_at": "2026-07-16T01:35:00Z",
+    "updated_at": "2026-07-16T01:35:14Z"
+  },
+  {
+    "id": "inq_exchange_resumed",
+    "gmail_connection_id": "gmail_conn_demo",
+    "gmail_thread_id": "thread_exchange_resumed",
+    "customer_name": "최유나",
+    "customer_email": "yuna.choi@example.com",
+    "subject": "셔츠를 다른 사이즈로 교환하고 싶습니다",
+    "preview": "M 사이즈로 교환하고 싶고 착용이나 세탁은 하지 않았습니다.",
+    "intent": "EXCHANGE",
+    "status": "ACTION_REQUIRED",
+    "stage": "WAITING_APPROVAL",
+    "completion_type": null,
+    "order_id": "ord_1003",
+    "order_candidate_ids": [],
+    "policy_version_ids": ["policy_version_exchange_2"],
+    "active_agent_run_id": "run_exchange_resumed",
+    "collected_information": {
+      "desired_size": "M",
+      "worn_or_washed": false
+    },
+    "required_action": {
+      "type": "REVIEW_DRAFT",
+      "label": "교환 답변 검토"
+    },
+    "received_at": "2026-07-16T02:10:00Z",
+    "updated_at": "2026-07-16T03:02:12Z"
+  },
+  {
+    "id": "inq_refund_waiting_approval",
+    "gmail_connection_id": "gmail_conn_demo",
+    "gmail_thread_id": "thread_refund_waiting_approval",
+    "customer_name": "박서연",
+    "customer_email": "seoyeon.park@example.com",
+    "subject": "배송이 너무 늦어서 환불 요청합니다",
+    "preview": "도착 예정일이 지났는데 아직 받지 못했습니다. 환불해 주세요.",
+    "intent": "REFUND",
+    "status": "ACTION_REQUIRED",
+    "stage": "WAITING_APPROVAL",
+    "completion_type": null,
+    "order_id": "ord_1004",
+    "order_candidate_ids": [],
+    "policy_version_ids": ["policy_version_refund_3"],
+    "active_agent_run_id": "run_refund_waiting_approval",
+    "required_action": {
+      "type": "REVIEW_DRAFT",
+      "label": "환불 답변 검토"
+    },
+    "received_at": "2026-07-16T04:08:00Z",
+    "updated_at": "2026-07-16T04:08:19Z"
+  },
+  {
+    "id": "inq_multiple_orders",
+    "gmail_connection_id": "gmail_conn_demo",
+    "gmail_thread_id": "thread_multiple_orders",
+    "customer_name": "정하늘",
+    "customer_email": "haneul.jeong@example.com",
+    "subject": "최근 주문한 상품을 환불하고 싶어요",
+    "preview": "최근에 산 상품 중 하나를 환불하고 싶습니다.",
+    "intent": "REFUND",
+    "status": "ACTION_REQUIRED",
+    "stage": "MANUAL_REQUIRED",
+    "completion_type": null,
+    "order_id": null,
+    "order_candidate_ids": ["ord_1005", "ord_1006"],
+    "policy_version_ids": [],
+    "active_agent_run_id": "run_multiple_orders",
+    "required_action": {
+      "type": "SELECT_ORDER",
+      "label": "문의와 연결할 주문 선택"
+    },
+    "received_at": "2026-07-16T05:20:00Z",
+    "updated_at": "2026-07-16T05:20:05Z"
+  },
+  {
+    "id": "inq_shipment_tool_failed",
+    "gmail_connection_id": "gmail_conn_demo",
+    "gmail_thread_id": "thread_shipment_tool_failed",
+    "customer_name": "오지후",
+    "customer_email": "jihoo.oh@example.com",
+    "subject": "배송 조회가 되지 않아요",
+    "preview": "운송장 조회가 되지 않는데 배송 상태를 확인해 주세요.",
+    "intent": "DELIVERY_STATUS",
+    "status": "ACTION_REQUIRED",
+    "stage": "FAILED",
+    "completion_type": null,
+    "order_id": "ord_1007",
+    "order_candidate_ids": [],
+    "policy_version_ids": [],
+    "active_agent_run_id": "run_shipment_tool_failed",
+    "required_action": {
+      "type": "RETRY_AGENT",
+      "label": "배송 조회 재시도"
+    },
+    "received_at": "2026-07-16T06:40:00Z",
+    "updated_at": "2026-07-16T06:40:24Z"
+  }
+]

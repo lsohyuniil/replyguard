@@ -1,0 +1,122 @@
+[
+  {
+    "id": "run_delivery_auto_sent",
+    "inquiry_id": "inq_delivery_auto_sent",
+    "graph_thread_id": "graph_delivery_auto_sent",
+    "checkpoint_id": "checkpoint_delivery_done",
+    "status": "COMPLETED",
+    "step_count": 7,
+    "resume_count": 0,
+    "answer_draft": {
+      "id": "draft_delivery_auto_sent",
+      "status": "SENT",
+      "content": "안녕하세요, 김민지 고객님. 주문하신 상품은 현재 대전HUB에서 배송지 터미널로 이동 중이며 7월 17일 도착 예정입니다. 운송장 번호는 555000000001입니다.",
+      "evidence_policy_version_ids": ["policy_version_delivery_1"]
+    },
+    "tool_calls": [
+      {"tool_name": "lookup_order", "signature": "lookup_order:RG-20260710-1001", "status": "SUCCEEDED", "attempt": 1},
+      {"tool_name": "lookup_shipment", "signature": "lookup_shipment:555000000001", "status": "SUCCEEDED", "attempt": 1},
+      {"tool_name": "search_policy", "signature": "search_policy:DELIVERY_STATUS", "status": "SUCCEEDED", "attempt": 1}
+    ],
+    "error_code": null,
+    "started_at": "2026-07-16T00:12:01Z",
+    "finished_at": "2026-07-16T00:12:08Z"
+  },
+  {
+    "id": "run_exchange_waiting_customer",
+    "inquiry_id": "inq_exchange_waiting_customer",
+    "graph_thread_id": "graph_exchange_waiting_customer",
+    "checkpoint_id": "checkpoint_exchange_waiting_customer",
+    "status": "INTERRUPTED",
+    "step_count": 4,
+    "resume_count": 0,
+    "answer_draft": null,
+    "tool_calls": [
+      {"tool_name": "lookup_order", "signature": "lookup_order:RG-20260708-1002", "status": "SUCCEEDED", "attempt": 1}
+    ],
+    "error_code": null,
+    "started_at": "2026-07-16T01:35:01Z",
+    "finished_at": null
+  },
+  {
+    "id": "run_exchange_resumed",
+    "inquiry_id": "inq_exchange_resumed",
+    "graph_thread_id": "graph_exchange_resumed",
+    "checkpoint_id": "checkpoint_exchange_waiting_approval",
+    "status": "INTERRUPTED",
+    "step_count": 8,
+    "resume_count": 1,
+    "resumed_from_checkpoint_id": "checkpoint_exchange_waiting_customer",
+    "answer_draft": {
+      "id": "draft_exchange_resumed",
+      "status": "WAITING_APPROVAL",
+      "content": "안녕하세요, 최유나 고객님. 미착용·미세탁 상태를 확인했습니다. M 사이즈 재고와 회수 일정을 확인한 후 교환 접수를 안내드리겠습니다.",
+      "evidence_policy_version_ids": ["policy_version_exchange_2"]
+    },
+    "tool_calls": [
+      {"tool_name": "lookup_order", "signature": "lookup_order:RG-20260709-1003", "status": "SUCCEEDED", "attempt": 1},
+      {"tool_name": "search_policy", "signature": "search_policy:EXCHANGE", "status": "SUCCEEDED", "attempt": 1}
+    ],
+    "error_code": null,
+    "started_at": "2026-07-16T02:10:01Z",
+    "resumed_at": "2026-07-16T03:02:01Z",
+    "finished_at": null
+  },
+  {
+    "id": "run_refund_waiting_approval",
+    "inquiry_id": "inq_refund_waiting_approval",
+    "graph_thread_id": "graph_refund_waiting_approval",
+    "checkpoint_id": "checkpoint_refund_waiting_approval",
+    "status": "INTERRUPTED",
+    "step_count": 6,
+    "resume_count": 0,
+    "answer_draft": {
+      "id": "draft_refund_waiting_approval",
+      "status": "WAITING_APPROVAL",
+      "content": "안녕하세요, 박서연 고객님. 배송 지연으로 불편을 드려 죄송합니다. 요청하신 주문의 배송 중단 가능 여부를 확인한 뒤 환불 절차를 안내드리겠습니다.",
+      "evidence_policy_version_ids": ["policy_version_refund_3"]
+    },
+    "tool_calls": [
+      {"tool_name": "lookup_order", "signature": "lookup_order:RG-20260705-1004", "status": "SUCCEEDED", "attempt": 1},
+      {"tool_name": "lookup_shipment", "signature": "lookup_shipment:111000000004", "status": "SUCCEEDED", "attempt": 1},
+      {"tool_name": "search_policy", "signature": "search_policy:REFUND", "status": "SUCCEEDED", "attempt": 1}
+    ],
+    "error_code": null,
+    "started_at": "2026-07-16T04:08:01Z",
+    "finished_at": null
+  },
+  {
+    "id": "run_multiple_orders",
+    "inquiry_id": "inq_multiple_orders",
+    "graph_thread_id": "graph_multiple_orders",
+    "checkpoint_id": "checkpoint_multiple_orders",
+    "status": "INTERRUPTED",
+    "step_count": 3,
+    "resume_count": 0,
+    "answer_draft": null,
+    "tool_calls": [
+      {"tool_name": "lookup_orders_by_email", "signature": "lookup_orders_by_email:haneul.jeong@example.com", "status": "SUCCEEDED", "attempt": 1}
+    ],
+    "error_code": "MULTIPLE_ORDERS_FOUND",
+    "started_at": "2026-07-16T05:20:01Z",
+    "finished_at": null
+  },
+  {
+    "id": "run_shipment_tool_failed",
+    "inquiry_id": "inq_shipment_tool_failed",
+    "graph_thread_id": "graph_shipment_tool_failed",
+    "checkpoint_id": "checkpoint_shipment_tool_failed",
+    "status": "FAILED",
+    "step_count": 5,
+    "resume_count": 0,
+    "answer_draft": null,
+    "tool_calls": [
+      {"tool_name": "lookup_order", "signature": "lookup_order:RG-20260712-1007", "status": "SUCCEEDED", "attempt": 1},
+      {"tool_name": "lookup_shipment", "signature": "lookup_shipment:999000000007", "status": "FAILED", "attempt": 1},
+      {"tool_name": "lookup_shipment", "signature": "lookup_shipment:999000000007", "status": "FAILED", "attempt": 2}
+    ],
+    "error_code": "SHIPMENT_LOOKUP_FAILED",
+    "started_at": "2026-07-16T06:40:01Z",
+    "finished_at": "2026-07-16T06:40:24Z"
+  }
+]
