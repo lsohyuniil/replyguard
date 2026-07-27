@@ -25,7 +25,7 @@ type SummaryCardData = {
   change: string;
   changeDirection: "up" | "down";
   helper: string;
-  tone: "accent" | "success" | "warning" | "muted";
+  tone: "accent" | "success" | "warning" | "danger" | "muted";
 };
 
 const intentLabels: Record<string, string> = {
@@ -51,13 +51,6 @@ const tones: DistributionItem["tone"][] = [
   "danger",
   "muted",
 ];
-
-function formatDuration(seconds: number) {
-  const minutes = Math.floor(seconds / 60);
-  const remainingSeconds = seconds % 60;
-
-  return `${minutes}분 ${remainingSeconds}초`;
-}
 
 function formatChange(value: number) {
   const sign = value > 0 ? "+" : "";
@@ -108,12 +101,12 @@ export function getDashboardData() {
       tone: "warning",
     },
     {
-      label: "평균 처리 시간",
-      value: formatDuration(summary.average_resolution_seconds),
-      change: formatChange(comparison.average_resolution_change_percent),
+      label: "처리 실패",
+      value: `${summary.failed}건`,
+      change: formatChange(comparison.failed_change_percent),
       changeDirection: "down",
-      helper: "응답 속도 개선",
-      tone: "muted",
+      helper: "지난 7일 대비",
+      tone: "danger",
     },
   ];
 

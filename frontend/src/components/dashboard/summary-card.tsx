@@ -4,13 +4,14 @@ type SummaryCardProps = {
   change: string;
   changeDirection: "up" | "down";
   helper: string;
-  tone: "accent" | "success" | "warning" | "muted";
+  tone: "accent" | "success" | "warning" | "danger" | "muted";
 };
 
 const toneStyles = {
   accent: "bg-accent-soft text-accent",
   success: "bg-success-soft text-success",
   warning: "bg-warning-soft text-warning",
+  danger: "bg-danger-soft text-danger",
   muted: "bg-surface-muted text-muted-foreground",
 };
 

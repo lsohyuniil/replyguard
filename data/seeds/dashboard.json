@@ -8,7 +8,7 @@
     "total_inquiries": 48,
     "auto_sent": 24,
     "action_required": 8,
-    "average_resolution_seconds": 462,
+    "failed": 3,
     "automation_rate": 50.0
   },
   "comparison": {
@@ -19,7 +19,7 @@
     "total_inquiries_change_percent": 17.1,
     "auto_sent_change_percent": 26.3,
     "action_required_change_percent": -11.1,
-    "average_resolution_change_percent": -8.7
+    "failed_change_percent": -25.0
   },
   "daily_trend": [
     {"date": "2026-07-10", "total": 5, "in_progress": 1, "action_required": 1, "completed": 3, "auto_sent": 2},
