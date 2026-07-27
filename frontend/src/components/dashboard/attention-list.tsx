@@ -1,3 +1,4 @@
+import ArrowForwardIcon from "@mui/icons-material/ArrowForwardRounded";
 import Link from "next/link";
 import type { AttentionInquiry } from "@/lib/dashboard-data";
 
@@ -13,7 +14,9 @@ export function AttentionList({ inquiries }: AttentionListProps) {
     >
       <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-5 sm:px-6">
         <div>
-          <h2 className="text-base font-bold text-foreground">확인 필요 문의</h2>
+          <h2 className="text-base font-bold text-foreground">
+            확인 필요 문의
+          </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             운영자의 판단이나 재시도가 필요한 문의입니다.
           </p>
@@ -33,7 +36,7 @@ export function AttentionList({ inquiries }: AttentionListProps) {
             <li key={inquiry.id}>
               <Link
                 href={`/inquiries/${inquiry.id}`}
-                className="group grid gap-3 px-5 py-4 transition-colors hover:bg-surface-hover sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:px-6"
+                className="group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 transition-colors hover:bg-surface-hover sm:px-6"
               >
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -51,12 +54,10 @@ export function AttentionList({ inquiries }: AttentionListProps) {
                     {inquiry.customerName} · {inquiry.receivedAt}
                   </p>
                 </div>
-                <span
+                <ArrowForwardIcon
                   aria-hidden="true"
-                  className="text-lg text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-accent"
-                >
-                  →
-                </span>
+                  className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-accent"
+                />
               </Link>
             </li>
           ))}

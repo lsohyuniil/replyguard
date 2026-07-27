@@ -1,9 +1,7 @@
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightIcon from "@mui/icons-material/ChevronRightRounded";
+import MenuIcon from "@mui/icons-material/MenuRounded";
 import { ThemeToggle } from "@/components/theme-toggle";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MenuIcon,
-} from "@/components/icons";
 
 type AppHeaderProps = {
   sidebarCollapsed: boolean;

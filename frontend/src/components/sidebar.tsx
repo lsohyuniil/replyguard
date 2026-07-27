@@ -1,15 +1,12 @@
 "use client";
 
+import CloseIcon from "@mui/icons-material/CloseRounded";
+import DashboardIcon from "@mui/icons-material/DashboardRounded";
+import InboxIcon from "@mui/icons-material/InboxRounded";
+import PolicyIcon from "@mui/icons-material/PolicyRounded";
+import SettingsIcon from "@mui/icons-material/SettingsRounded";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ComponentType, SVGProps } from "react";
-import {
-  CloseIcon,
-  DashboardIcon,
-  InboxIcon,
-  PolicyIcon,
-  SettingsIcon,
-} from "@/components/icons";
 
 type SidebarProps = {
   collapsed?: boolean;
@@ -21,7 +18,7 @@ type SidebarProps = {
 type NavigationItem = {
   label: string;
   href: string;
-  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  icon: typeof DashboardIcon;
 };
 
 const navigationItems: NavigationItem[] = [
@@ -31,6 +28,7 @@ const navigationItems: NavigationItem[] = [
   { label: "연동 및 자동화", href: "/settings", icon: SettingsIcon },
 ];
 
+// 상세 페이지에서도 해당 상위 메뉴를 선택된 상태로 보여줌
 function isActivePath(pathname: string, href: string) {
   return href === "/"
     ? pathname === href
