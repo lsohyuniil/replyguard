@@ -1,5 +1,7 @@
 "use client";
 
+import DarkModeIcon from "@mui/icons-material/DarkModeRounded";
+import LightModeIcon from "@mui/icons-material/LightModeRounded";
 import { useTheme } from "next-themes";
 
 export function ThemeToggle() {
@@ -9,14 +11,15 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      aria-label="Toggle dark mode"
-      aria-pressed={isDark}
+      aria-label="색상 테마 전환"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="inline-flex h-10 items-center justify-center rounded-full border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-900 shadow-sm transition-colors hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-900"
+      className="inline-flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-foreground shadow-sm transition-colors hover:bg-surface-hover"
     >
-      <span suppressHydrationWarning>
-        {isDark ? "Light mode" : "Dark mode"}
-      </span>
+      {isDark ? (
+        <DarkModeIcon aria-hidden="true" className="size-5" />
+      ) : (
+        <LightModeIcon aria-hidden="true" className="size-5" />
+      )}
     </button>
   );
 }
