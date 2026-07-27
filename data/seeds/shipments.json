@@ -1,0 +1,79 @@
+[
+  {
+    "id": "shp_1001",
+    "order_id": "ord_1001",
+    "carrier": "CJ대한통운",
+    "tracking_number": "555000000001",
+    "status": "IN_TRANSIT",
+    "shipped_at": "2026-07-14T01:10:00Z",
+    "estimated_delivery_at": "2026-07-17T09:00:00Z",
+    "delivered_at": null,
+    "latest_event": "대전HUB에서 배송지 터미널로 이동 중"
+  },
+  {
+    "id": "shp_1002",
+    "order_id": "ord_1002",
+    "carrier": "한진택배",
+    "tracking_number": "777000000002",
+    "status": "DELIVERED",
+    "shipped_at": "2026-07-09T02:00:00Z",
+    "estimated_delivery_at": "2026-07-11T09:00:00Z",
+    "delivered_at": "2026-07-11T05:22:00Z",
+    "latest_event": "고객에게 배송 완료"
+  },
+  {
+    "id": "shp_1003",
+    "order_id": "ord_1003",
+    "carrier": "롯데택배",
+    "tracking_number": "333000000003",
+    "status": "DELIVERED",
+    "shipped_at": "2026-07-10T00:40:00Z",
+    "estimated_delivery_at": "2026-07-12T09:00:00Z",
+    "delivered_at": "2026-07-12T04:15:00Z",
+    "latest_event": "고객에게 배송 완료"
+  },
+  {
+    "id": "shp_1004",
+    "order_id": "ord_1004",
+    "carrier": "우체국택배",
+    "tracking_number": "111000000004",
+    "status": "DELAYED",
+    "shipped_at": "2026-07-07T00:50:00Z",
+    "estimated_delivery_at": "2026-07-10T09:00:00Z",
+    "delivered_at": null,
+    "latest_event": "집중호우로 지역 배송 지연"
+  },
+  {
+    "id": "shp_1005",
+    "order_id": "ord_1005",
+    "carrier": "CJ대한통운",
+    "tracking_number": "555000000005",
+    "status": "DELIVERED",
+    "shipped_at": "2026-07-12T01:00:00Z",
+    "estimated_delivery_at": "2026-07-14T09:00:00Z",
+    "delivered_at": "2026-07-14T04:30:00Z",
+    "latest_event": "고객에게 배송 완료"
+  },
+  {
+    "id": "shp_1006",
+    "order_id": "ord_1006",
+    "carrier": "한진택배",
+    "tracking_number": "777000000006",
+    "status": "IN_TRANSIT",
+    "shipped_at": "2026-07-14T02:20:00Z",
+    "estimated_delivery_at": "2026-07-16T09:00:00Z",
+    "delivered_at": null,
+    "latest_event": "배송지 터미널 도착"
+  },
+  {
+    "id": "shp_1007",
+    "order_id": "ord_1007",
+    "carrier": "Mock택배",
+    "tracking_number": "999000000007",
+    "status": "LOOKUP_FAILED",
+    "shipped_at": "2026-07-13T01:40:00Z",
+    "estimated_delivery_at": null,
+    "delivered_at": null,
+    "latest_event": "택배사 조회 오류"
+  }
+]

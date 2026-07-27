@@ -1,0 +1,58 @@
+{
+  "period": {
+    "from": "2026-07-10",
+    "to": "2026-07-16",
+    "timezone": "Asia/Seoul"
+  },
+  "summary": {
+    "total_inquiries": 48,
+    "auto_sent": 24,
+    "action_required": 8,
+    "average_resolution_seconds": 462,
+    "automation_rate": 50.0
+  },
+  "comparison": {
+    "previous_period": {
+      "from": "2026-07-03",
+      "to": "2026-07-09"
+    },
+    "total_inquiries_change_percent": 17.1,
+    "auto_sent_change_percent": 26.3,
+    "action_required_change_percent": -11.1,
+    "average_resolution_change_percent": -8.7
+  },
+  "daily_trend": [
+    {"date": "2026-07-10", "total": 5, "in_progress": 1, "action_required": 1, "completed": 3, "auto_sent": 2},
+    {"date": "2026-07-11", "total": 7, "in_progress": 2, "action_required": 1, "completed": 4, "auto_sent": 3},
+    {"date": "2026-07-12", "total": 6, "in_progress": 1, "action_required": 1, "completed": 4, "auto_sent": 3},
+    {"date": "2026-07-13", "total": 8, "in_progress": 2, "action_required": 1, "completed": 5, "auto_sent": 4},
+    {"date": "2026-07-14", "total": 7, "in_progress": 1, "action_required": 2, "completed": 4, "auto_sent": 3},
+    {"date": "2026-07-15", "total": 6, "in_progress": 0, "action_required": 1, "completed": 5, "auto_sent": 4},
+    {"date": "2026-07-16", "total": 9, "in_progress": 2, "action_required": 1, "completed": 6, "auto_sent": 5}
+  ],
+  "status_distribution": [
+    {"status": "IN_PROGRESS", "label": "처리 중", "count": 9},
+    {"status": "ACTION_REQUIRED", "label": "확인 필요", "count": 8},
+    {"status": "COMPLETED", "label": "처리 완료", "count": 31}
+  ],
+  "intent_distribution": [
+    {"intent": "DELIVERY_STATUS", "label": "배송 현황", "count": 19},
+    {"intent": "POLICY_FAQ", "label": "정책 FAQ", "count": 8},
+    {"intent": "EXCHANGE", "label": "교환", "count": 7},
+    {"intent": "REFUND", "label": "환불", "count": 6},
+    {"intent": "DAMAGE", "label": "파손·오배송", "count": 4},
+    {"intent": "COMPENSATION", "label": "보상", "count": 2},
+    {"intent": "OTHER", "label": "기타", "count": 2}
+  ],
+  "completion_distribution": [
+    {"completion_type": "AUTO_SENT", "label": "자동 발송", "count": 24},
+    {"completion_type": "APPROVED_SENT", "label": "승인 후 발송", "count": 5},
+    {"completion_type": "MANUAL_SENT", "label": "직접 발송", "count": 2}
+  ],
+  "attention_inquiry_ids": [
+    "inq_exchange_resumed",
+    "inq_refund_waiting_approval",
+    "inq_multiple_orders",
+    "inq_shipment_tool_failed"
+  ]
+}

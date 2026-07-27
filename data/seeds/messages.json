@@ -1,0 +1,112 @@
+[
+  {
+    "id": "msg_delivery_inbound",
+    "inquiry_id": "inq_delivery_auto_sent",
+    "gmail_message_id": "gmail_msg_delivery_inbound",
+    "direction": "INBOUND",
+    "sender_name": "김민지",
+    "sender_email": "minji.kim@example.com",
+    "body_text": "안녕하세요. RG-20260710-1001 주문의 배송 상태를 확인하고 싶습니다. 언제쯤 받을 수 있을까요?",
+    "occurred_at": "2026-07-16T00:12:00Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_delivery_outbound",
+    "inquiry_id": "inq_delivery_auto_sent",
+    "gmail_message_id": "gmail_msg_delivery_outbound",
+    "direction": "OUTBOUND",
+    "sender_name": "ReplyGuard",
+    "sender_email": "support@replyguard.example.com",
+    "body_text": "안녕하세요, 김민지 고객님. 주문하신 상품은 현재 대전HUB에서 배송지 터미널로 이동 중이며 7월 17일 도착 예정입니다. 운송장 번호는 555000000001입니다.",
+    "occurred_at": "2026-07-16T00:12:08Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_exchange_wait_inbound",
+    "inquiry_id": "inq_exchange_waiting_customer",
+    "gmail_message_id": "gmail_msg_exchange_wait_inbound",
+    "direction": "INBOUND",
+    "sender_name": "이준호",
+    "sender_email": "junho.lee@example.com",
+    "body_text": "후드 사이즈를 교환하고 싶은데 어떻게 하면 되나요? 주문번호는 RG-20260708-1002입니다.",
+    "occurred_at": "2026-07-16T01:35:00Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_exchange_wait_request",
+    "inquiry_id": "inq_exchange_waiting_customer",
+    "gmail_message_id": "gmail_msg_exchange_wait_request",
+    "direction": "OUTBOUND",
+    "sender_name": "ReplyGuard",
+    "sender_email": "support@replyguard.example.com",
+    "body_text": "교환을 도와드리겠습니다. 원하시는 교환 사이즈와 상품의 착용·세탁 여부를 회신해 주세요.",
+    "occurred_at": "2026-07-16T01:35:14Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_exchange_resume_inbound",
+    "inquiry_id": "inq_exchange_resumed",
+    "gmail_message_id": "gmail_msg_exchange_resume_inbound",
+    "direction": "INBOUND",
+    "sender_name": "최유나",
+    "sender_email": "yuna.choi@example.com",
+    "body_text": "RG-20260709-1003 셔츠를 교환하고 싶습니다.",
+    "occurred_at": "2026-07-16T02:10:00Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_exchange_resume_request",
+    "inquiry_id": "inq_exchange_resumed",
+    "gmail_message_id": "gmail_msg_exchange_resume_request",
+    "direction": "OUTBOUND",
+    "sender_name": "ReplyGuard",
+    "sender_email": "support@replyguard.example.com",
+    "body_text": "원하시는 교환 사이즈와 상품의 착용·세탁 여부를 회신해 주세요.",
+    "occurred_at": "2026-07-16T02:10:12Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_exchange_resume_reply",
+    "inquiry_id": "inq_exchange_resumed",
+    "gmail_message_id": "gmail_msg_exchange_resume_reply",
+    "direction": "INBOUND",
+    "sender_name": "최유나",
+    "sender_email": "yuna.choi@example.com",
+    "body_text": "M 사이즈로 교환하고 싶고 착용이나 세탁은 하지 않았습니다.",
+    "occurred_at": "2026-07-16T03:02:00Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_refund_inbound",
+    "inquiry_id": "inq_refund_waiting_approval",
+    "gmail_message_id": "gmail_msg_refund_inbound",
+    "direction": "INBOUND",
+    "sender_name": "박서연",
+    "sender_email": "seoyeon.park@example.com",
+    "body_text": "도착 예정일이 지났는데 아직 받지 못했습니다. 주문번호는 RG-20260705-1004입니다. 환불해 주세요.",
+    "occurred_at": "2026-07-16T04:08:00Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_multiple_orders_inbound",
+    "inquiry_id": "inq_multiple_orders",
+    "gmail_message_id": "gmail_msg_multiple_orders_inbound",
+    "direction": "INBOUND",
+    "sender_name": "정하늘",
+    "sender_email": "haneul.jeong@example.com",
+    "body_text": "최근에 산 상품 중 하나를 환불하고 싶습니다. 주문번호는 기억나지 않아요.",
+    "occurred_at": "2026-07-16T05:20:00Z",
+    "attachments": []
+  },
+  {
+    "id": "msg_tool_failed_inbound",
+    "inquiry_id": "inq_shipment_tool_failed",
+    "gmail_message_id": "gmail_msg_tool_failed_inbound",
+    "direction": "INBOUND",
+    "sender_name": "오지후",
+    "sender_email": "jihoo.oh@example.com",
+    "body_text": "RG-20260712-1007 주문의 운송장 조회가 되지 않는데 배송 상태를 확인해 주세요.",
+    "occurred_at": "2026-07-16T06:40:00Z",
+    "attachments": []
+  }
+]
