@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { AppHeader } from "@/components/app-header";
 import { Sidebar } from "@/components/sidebar";
 
@@ -8,35 +8,44 @@ type AppShellProps = {
   children: ReactNode;
 };
 
+function restoreMobileMenuFocus() {
+  requestAnimationFrame(() => {
+    document.getElementById("mobile-menu-trigger")?.focus();
+  });
+}
+
 export function AppShell({ children }: AppShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const closeMobileMenu = useCallback(() => {
+    setMobileMenuOpen(false);
+    restoreMobileMenuFocus();
+  }, []);
 
-  const restoreMobileMenuFocus = () => {
-    requestAnimationFrame(() => {
-      document.getElementById("mobile-menu-trigger")?.focus();
-    });
-  };
-
+  // 모바일 메뉴가 열리면 배경 스크롤과 포커스를 메뉴 안에 고정함
   useEffect(() => {
     if (!mobileMenuOpen) return;
 
     const previousOverflow = document.body.style.overflow;
     const desktopMediaQuery = window.matchMedia("(min-width: 768px)");
+
+    // 메뉴 뒤에 있는 화면이 같이 스크롤되지 않게 함
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      // ESC를 누르면 메뉴를 닫고 메뉴 버튼으로 포커스를 돌림
       if (event.key === "Escape") {
-        setMobileMenuOpen(false);
-        restoreMobileMenuFocus();
+        closeMobileMenu();
         return;
       }
 
+      // Tab으로 포커스가 모바일 메뉴 밖으로 나가지 않게 함
       if (event.key === "Tab") {
         const mobileNavigation = document.getElementById("mobile-navigation");
-        const focusableElements = mobileNavigation?.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        );
+        const focusableElements =
+          mobileNavigation?.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          );
 
         if (!focusableElements?.length) return;
 
@@ -53,6 +62,7 @@ export function AppShell({ children }: AppShellProps) {
       }
     };
 
+    // 화면이 데스크톱 크기로 바뀌면 모바일 메뉴를 닫음
     const handleDesktopChange = (event: MediaQueryListEvent) => {
       if (event.matches) {
         setMobileMenuOpen(false);
@@ -61,14 +71,14 @@ export function AppShell({ children }: AppShellProps) {
 
     window.addEventListener("keydown", handleKeyDown);
     desktopMediaQuery.addEventListener("change", handleDesktopChange);
+
+    // 메뉴를 닫을 때 스크롤과 이벤트를 원래 상태로 정리함
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
       desktopMediaQuery.removeEventListener("change", handleDesktopChange);
     };
-  }, [mobileMenuOpen]);
-
-  const closeMobileMenu = () => setMobileMenuOpen(false);
+  }, [closeMobileMenu, mobileMenuOpen]);
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
@@ -94,23 +104,14 @@ export function AppShell({ children }: AppShellProps) {
           <button
             type="button"
             aria-label="메뉴 닫기"
-            onClick={() => {
-              closeMobileMenu();
-              restoreMobileMenuFocus();
-            }}
+            onClick={closeMobileMenu}
             className="absolute inset-0 bg-black/50"
           />
           <div className="relative h-full w-fit">
             <Sidebar
               mobile
-              onClose={() => {
-                closeMobileMenu();
-                restoreMobileMenuFocus();
-              }}
-              onNavigate={() => {
-                closeMobileMenu();
-                restoreMobileMenuFocus();
-              }}
+              onClose={closeMobileMenu}
+              onNavigate={closeMobileMenu}
             />
           </div>
         </div>
