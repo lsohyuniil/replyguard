@@ -1,5 +1,6 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardRounded";
 import Link from "next/link";
+import { InquiryListRow } from "@/components/inquiries/inquiry-list-row";
 import type { AttentionInquiry } from "@/lib/dashboard-data";
 
 type AttentionListProps = {
@@ -7,6 +8,8 @@ type AttentionListProps = {
 };
 
 export function AttentionList({ inquiries }: AttentionListProps) {
+  const visibleInquiries = inquiries.slice(0, 4);
+
   return (
     <section
       className="overflow-hidden rounded-2xl border border-border bg-surface"
@@ -32,36 +35,27 @@ export function AttentionList({ inquiries }: AttentionListProps) {
         </div>
       ) : (
         <ul className="divide-y divide-border">
-          {inquiries.map((inquiry) => (
+          {visibleInquiries.map((inquiry) => (
             <li key={inquiry.id}>
-              <Link
-                href={`/inquiries/${inquiry.id}`}
-                className="group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-4 transition-colors hover:bg-surface-hover sm:px-6"
-              >
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-md bg-accent-soft px-2 py-1 text-[11px] font-bold text-accent">
-                      {inquiry.intentLabel}
-                    </span>
-                    <span className="text-xs font-medium text-warning">
-                      {inquiry.stageLabel}
-                    </span>
-                  </div>
-                  <p className="mt-2 truncate text-sm font-semibold text-foreground group-hover:text-accent">
-                    {inquiry.subject}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {inquiry.customerName} · {inquiry.receivedAt}
-                  </p>
-                </div>
-                <ArrowForwardIcon
-                  aria-hidden="true"
-                  className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-accent"
-                />
-              </Link>
+              <InquiryListRow
+                {...inquiry}
+                statusLabel={inquiry.stageLabel}
+              />
             </li>
           ))}
         </ul>
+      )}
+
+      {inquiries.length > 0 && (
+        <div className="border-t border-border px-5 py-4 sm:px-6">
+          <Link
+            href="/inquiries?status=ACTION_REQUIRED"
+            className="flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-bold text-accent transition-colors hover:bg-accent-soft"
+          >
+            문의함 전체 보기
+            <ArrowForwardIcon aria-hidden="true" className="size-5" />
+          </Link>
+        </div>
       )}
     </section>
   );

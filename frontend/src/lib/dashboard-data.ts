@@ -1,5 +1,6 @@
 import dashboardFixture from "../../../data/seeds/dashboard.json";
 import inquiryFixture from "../../../data/seeds/inquiries.json";
+import type { InquiryBadgeTone } from "@/lib/inquiry-data";
 
 export type TrendPoint = (typeof dashboardFixture.daily_trend)[number];
 
@@ -13,9 +14,12 @@ export type DistributionItem = {
 export type AttentionInquiry = {
   id: string;
   subject: string;
+  preview: string;
   customerName: string;
+  customerEmail: string;
   intentLabel: string;
   stageLabel: string;
+  statusTone: InquiryBadgeTone;
   receivedAt: string;
 };
 
@@ -122,12 +126,15 @@ export function getDashboardData() {
     .map((inquiry) => ({
       id: inquiry.id,
       subject: inquiry.subject,
+      preview: inquiry.preview,
       customerName: inquiry.customer_name,
+      customerEmail: inquiry.customer_email,
       intentLabel: intentLabels[inquiry.intent] ?? inquiry.intent,
       stageLabel:
         inquiry.required_action?.label ??
         stageLabels[inquiry.stage] ??
         inquiry.stage,
+      statusTone: inquiry.stage === "FAILED" ? "danger" : "warning",
       receivedAt: receivedAtFormatter.format(new Date(inquiry.received_at)),
     }));
 
