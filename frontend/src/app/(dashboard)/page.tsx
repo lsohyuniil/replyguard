@@ -45,12 +45,12 @@ export default function DashboardPage() {
       <section className="grid gap-5 xl:grid-cols-2">
         <DistributionChart
           title="문의 유형"
-          description="배송 문의가 가장 높은 비중을 차지하고 있습니다."
+          description="최근 7일 문의의 유형별 분포입니다."
           data={dashboard.intentDistribution}
         />
         <DistributionChart
           title="완료 방식"
-          description="완료된 문의 31건의 발송 방식을 비교합니다."
+          description="완료된 문의의 발송 방식을 비교합니다."
           data={dashboard.completionDistribution}
         />
       </section>

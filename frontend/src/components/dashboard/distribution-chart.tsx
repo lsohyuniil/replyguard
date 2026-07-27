@@ -31,7 +31,7 @@ export function DistributionChart({
 
       {data.length === 0 || total === 0 ? (
         <div className="mt-6 grid h-40 place-items-center rounded-xl bg-surface-muted text-sm text-muted-foreground">
-          표시할 분포 데이터가 없습니다.
+          표시할 데이터가 없습니다.
         </div>
       ) : (
         <div className="mt-6 space-y-4">

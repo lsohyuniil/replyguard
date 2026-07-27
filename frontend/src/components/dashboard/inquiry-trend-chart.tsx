@@ -4,23 +4,33 @@ type InquiryTrendChartProps = {
   data: TrendPoint[];
 };
 
-function createPoints(data: TrendPoint[], width: number, height: number) {
-  if (data.length === 0) return "";
+type ChartPoint = {
+  date: string;
+  x: number;
+  y: number;
+};
+
+// 문의 수를 SVG에서 사용할 좌표로 바꿈
+function createChartPoints(
+  data: TrendPoint[],
+  width: number,
+  height: number,
+): ChartPoint[] {
+  if (data.length === 0) return [];
 
   const maximum = Math.max(...data.map((point) => point.total), 1);
   const step = data.length === 1 ? 0 : width / (data.length - 1);
 
-  return data
-    .map((point, index) => {
-      const x = index * step;
-      const y = height - (point.total / maximum) * height;
-      return `${x},${y}`;
-    })
-    .join(" ");
+  return data.map((point, index) => ({
+    date: point.date,
+    x: index * step,
+    y: height - (point.total / maximum) * height,
+  }));
 }
 
 export function InquiryTrendChart({ data }: InquiryTrendChartProps) {
-  const points = createPoints(data, 600, 150);
+  const chartPoints = createChartPoints(data, 600, 150);
+  const polylinePoints = chartPoints.map(({ x, y }) => `${x},${y}`).join(" ");
   const total = data.reduce((sum, point) => sum + point.total, 0);
   const hasData = data.some((point) => point.total > 0);
 
@@ -31,7 +41,9 @@ export function InquiryTrendChart({ data }: InquiryTrendChartProps) {
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-base font-bold text-foreground">문의 처리 추이</h2>
+          <h2 className="text-base font-bold text-foreground">
+            문의 처리 추이
+          </h2>
           <p className="mt-1 text-sm text-muted-foreground">
             최근 7일 동안 접수된 문의 {total}건
           </p>
@@ -47,12 +59,27 @@ export function InquiryTrendChart({ data }: InquiryTrendChartProps) {
         </div>
       ) : (
         <>
-          <div className="mt-7 h-44 w-full" role="img" aria-label="최근 7일 문의 추이 선 그래프">
-            <svg viewBox="-8 -8 616 174" className="h-full w-full overflow-visible">
+          <div
+            className="mt-7 h-44 w-full"
+            role="img"
+            aria-label="최근 7일 문의 추이 선 그래프"
+          >
+            <svg
+              viewBox="-8 -8 616 174"
+              className="h-full w-full overflow-visible"
+            >
               <defs>
                 <linearGradient id="trendArea" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.24" />
-                  <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+                  <stop
+                    offset="0%"
+                    stopColor="var(--accent)"
+                    stopOpacity="0.24"
+                  />
+                  <stop
+                    offset="100%"
+                    stopColor="var(--accent)"
+                    stopOpacity="0"
+                  />
                 </linearGradient>
               </defs>
               {[0, 50, 100, 150].map((y) => (
@@ -67,37 +94,36 @@ export function InquiryTrendChart({ data }: InquiryTrendChartProps) {
                 />
               ))}
               <polygon
-                points={`0,150 ${points} 600,150`}
+                points={`0,150 ${polylinePoints} 600,150`}
                 fill="url(#trendArea)"
               />
               <polyline
-                points={points}
+                points={polylinePoints}
                 fill="none"
                 stroke="var(--accent)"
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-              {points.split(" ").map((point, index) => {
-                const [cx, cy] = point.split(",");
-                return (
-                  <circle
-                    key={data[index].date}
-                    cx={cx}
-                    cy={cy}
-                    r="5"
-                    fill="var(--surface)"
-                    stroke="var(--accent)"
-                    strokeWidth="3"
-                  />
-                );
-              })}
+              {chartPoints.map((point) => (
+                <circle
+                  key={point.date}
+                  cx={point.x}
+                  cy={point.y}
+                  r="5"
+                  fill="var(--surface)"
+                  stroke="var(--accent)"
+                  strokeWidth="3"
+                />
+              ))}
             </svg>
           </div>
           <div className="mt-2 grid grid-cols-7 gap-1">
             {data.map((point) => (
               <div key={point.date} className="text-center">
-                <p className="text-xs font-bold text-foreground">{point.total}</p>
+                <p className="text-xs font-bold text-foreground">
+                  {point.total}
+                </p>
                 <p className="mt-1 text-[11px] text-muted-foreground">
                   {Number(point.date.slice(-2))}일
                 </p>

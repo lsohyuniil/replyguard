@@ -23,7 +23,7 @@ type SummaryCardData = {
   label: string;
   value: string;
   change: string;
-  changeDirection: "up" | "down";
+  isImprovement: boolean;
   helper: string;
   tone: "accent" | "success" | "warning" | "danger" | "muted";
 };
@@ -57,30 +57,37 @@ function formatChange(value: number) {
   return `${sign}${value.toFixed(1)}%`;
 }
 
-function toDistribution<T extends { count: number }>(
+function toDistribution<T extends { count: number; label: string }>(
   items: T[],
   keyFor: (item: T) => string,
-  labelFor: (item: T) => string,
 ): DistributionItem[] {
   return items.map((item, index) => ({
     key: keyFor(item),
-    label: labelFor(item),
+    label: item.label,
     count: item.count,
     tone: tones[index % tones.length],
   }));
 }
 
+// JSON 목데이터를 대시보드 컴포넌트에서 쓰기 좋은 형태로 정리함
 export function getDashboardData() {
   const summary = dashboardFixture.summary;
   const comparison = dashboardFixture.comparison;
   const attentionIds = new Set(dashboardFixture.attention_inquiry_ids);
+  const receivedAtFormatter = new Intl.DateTimeFormat("ko-KR", {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: dashboardFixture.period.timezone,
+  });
 
   const summaryCards: SummaryCardData[] = [
     {
       label: "전체 문의",
       value: `${summary.total_inquiries}건`,
       change: formatChange(comparison.total_inquiries_change_percent),
-      changeDirection: "up",
+      isImprovement: comparison.total_inquiries_change_percent > 0,
       helper: "지난 7일 대비",
       tone: "accent",
     },
@@ -88,7 +95,7 @@ export function getDashboardData() {
       label: "자동 발송",
       value: `${summary.auto_sent}건`,
       change: formatChange(comparison.auto_sent_change_percent),
-      changeDirection: "up",
+      isImprovement: comparison.auto_sent_change_percent > 0,
       helper: `자동 처리율 ${summary.automation_rate.toFixed(0)}%`,
       tone: "success",
     },
@@ -96,7 +103,7 @@ export function getDashboardData() {
       label: "확인 필요",
       value: `${summary.action_required}건`,
       change: formatChange(comparison.action_required_change_percent),
-      changeDirection: "down",
+      isImprovement: comparison.action_required_change_percent < 0,
       helper: "지난 7일 대비",
       tone: "warning",
     },
@@ -104,7 +111,7 @@ export function getDashboardData() {
       label: "처리 실패",
       value: `${summary.failed}건`,
       change: formatChange(comparison.failed_change_percent),
-      changeDirection: "down",
+      isImprovement: comparison.failed_change_percent < 0,
       helper: "지난 7일 대비",
       tone: "danger",
     },
@@ -121,13 +128,7 @@ export function getDashboardData() {
         inquiry.required_action?.label ??
         stageLabels[inquiry.stage] ??
         inquiry.stage,
-      receivedAt: new Intl.DateTimeFormat("ko-KR", {
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        timeZone: dashboardFixture.period.timezone,
-      }).format(new Date(inquiry.received_at)),
+      receivedAt: receivedAtFormatter.format(new Date(inquiry.received_at)),
     }));
 
   return {
@@ -137,17 +138,14 @@ export function getDashboardData() {
     statusDistribution: toDistribution(
       dashboardFixture.status_distribution,
       (item) => item.status,
-      (item) => item.label,
     ),
     intentDistribution: toDistribution(
       dashboardFixture.intent_distribution,
       (item) => item.intent,
-      (item) => item.label,
     ),
     completionDistribution: toDistribution(
       dashboardFixture.completion_distribution,
       (item) => item.completion_type,
-      (item) => item.label,
     ),
     attentionInquiries,
   };
