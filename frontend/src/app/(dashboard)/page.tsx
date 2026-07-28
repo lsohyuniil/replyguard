@@ -1,5 +1,5 @@
 import {
-  AttentionList,
+  DashboardAttentionList,
   DistributionChart,
   InquiryTrendChart,
   SummaryCard,
@@ -57,7 +57,7 @@ export default function DashboardPage() {
         />
       </section>
 
-      <AttentionList inquiries={dashboard.attentionInquiries} />
+      <DashboardAttentionList />
     </div>
   );
 }

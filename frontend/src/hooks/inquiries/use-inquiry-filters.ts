@@ -1,33 +1,30 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useDebouncedValue } from "@/hooks/common/use-debounced-value";
 import { INQUIRY_PAGE_SIZE } from "@/lib/inquiries/constants";
-import { filterInquiries } from "@/lib/inquiries/filters";
 import type {
-  InquiryListItem,
+  InquiryIntent,
   InquiryStatus,
 } from "@/lib/inquiries/types";
 
 export function useInquiryFilters(
-  inquiries: InquiryListItem[],
   initialStatus: InquiryStatus,
 ) {
   const [search, setSearchValue] = useState("");
   const [status, setStatusValue] = useState<InquiryStatus>(initialStatus);
-  const [intent, setIntentValue] = useState("ALL");
+  const [intent, setIntentValue] = useState<InquiryIntent>("ALL");
   const [currentPage, setCurrentPage] = useState(1);
-
-  const filteredInquiries = useMemo(
-    () => filterInquiries(inquiries, { search, status, intent }),
-    [inquiries, intent, search, status],
-  );
-
-  const totalPages = Math.ceil(
-    filteredInquiries.length / INQUIRY_PAGE_SIZE,
-  );
-  const paginatedInquiries = filteredInquiries.slice(
-    (currentPage - 1) * INQUIRY_PAGE_SIZE,
-    currentPage * INQUIRY_PAGE_SIZE,
+  const debouncedSearch = useDebouncedValue(search, 300);
+  const queryParams = useMemo(
+    () => ({
+      search: debouncedSearch,
+      status,
+      intent,
+      page: currentPage,
+      pageSize: INQUIRY_PAGE_SIZE,
+    }),
+    [currentPage, debouncedSearch, intent, status],
   );
 
   const resetPage = () => setCurrentPage(1);
@@ -39,7 +36,7 @@ export function useInquiryFilters(
     setStatusValue(value);
     resetPage();
   };
-  const setIntent = (value: string) => {
+  const setIntent = (value: InquiryIntent) => {
     setIntentValue(value);
     resetPage();
   };
@@ -55,9 +52,8 @@ export function useInquiryFilters(
     status,
     intent,
     currentPage,
-    filteredInquiries,
-    paginatedInquiries,
-    totalPages,
+    queryParams,
+    isSearchPending: search !== debouncedSearch,
     hasActiveFilters:
       search.length > 0 || status !== "ALL" || intent !== "ALL",
     setSearch,

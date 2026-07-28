@@ -1,9 +1,12 @@
-import type { InquiryOption } from "@/lib/inquiries";
+import type {
+  InquiryIntent,
+  InquiryOption,
+} from "@/lib/inquiries";
 
 type InquiryIntentFilterProps = {
-  value: string;
+  value: InquiryIntent;
   options: InquiryOption[];
-  onChange: (value: string) => void;
+  onChange: (value: InquiryIntent) => void;
 };
 
 export function InquiryIntentFilter({
@@ -16,7 +19,9 @@ export function InquiryIntentFilter({
       <span className="sr-only">문의 유형</span>
       <select
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) =>
+          onChange(event.target.value as InquiryIntent)
+        }
         className="h-11 w-full rounded-xl border border-border bg-background px-3 text-sm font-medium text-foreground outline-none focus:border-accent"
       >
         <option value="ALL">모든 문의 유형</option>

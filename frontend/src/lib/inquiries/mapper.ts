@@ -12,19 +12,17 @@ export function mapInquiryListItem(
   inquiry: InquirySource,
   formatter: Intl.DateTimeFormat,
 ): InquiryListItem {
-  const status = inquiry.status as InquiryListItem["status"];
-
   return {
     id: inquiry.id,
-    customerName: inquiry.customer_name,
+    customerName: inquiry.customer_name ?? inquiry.customer_email,
     customerEmail: inquiry.customer_email,
     subject: inquiry.subject,
     preview: inquiry.preview,
     intent: inquiry.intent,
     intentLabel: intentLabels[inquiry.intent] ?? inquiry.intent,
-    status,
-    statusLabel: statusLabels[status],
-    statusTone: statusTones[status],
+    status: inquiry.status,
+    statusLabel: statusLabels[inquiry.status],
+    statusTone: statusTones[inquiry.status],
     receivedAt: formatter.format(new Date(inquiry.received_at)),
   };
 }
