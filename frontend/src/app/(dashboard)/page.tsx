@@ -1,8 +1,10 @@
-import { AttentionList } from "@/components/dashboard/attention-list";
-import { DistributionChart } from "@/components/dashboard/distribution-chart";
-import { InquiryTrendChart } from "@/components/dashboard/inquiry-trend-chart";
-import { SummaryCard } from "@/components/dashboard/summary-card";
-import { getDashboardData } from "@/lib/dashboard-data";
+import {
+  AttentionList,
+  DistributionChart,
+  InquiryTrendChart,
+  SummaryCard,
+} from "@/components/dashboard";
+import { getDashboardData } from "@/lib/dashboard";
 
 export default function DashboardPage() {
   const dashboard = getDashboardData();

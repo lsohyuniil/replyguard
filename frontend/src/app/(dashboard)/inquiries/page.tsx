@@ -1,9 +1,9 @@
-import { InquiryInbox } from "@/components/inquiries/inquiry-inbox";
+import { InquiryInbox } from "@/components/inquiries";
 import {
   getInquiryListData,
   isInquiryStatus,
   type InquiryStatus,
-} from "@/lib/inquiry-data";
+} from "@/lib/inquiries";
 
 type InquiriesPageProps = {
   searchParams: Promise<{ status?: string | string[] }>;

@@ -1,4 +1,4 @@
-import type { TrendPoint } from "@/lib/dashboard-data";
+import type { TrendPoint } from "@/lib/dashboard";
 
 type InquiryTrendChartProps = {
   data: TrendPoint[];
