@@ -1,8 +1,6 @@
 type SummaryCardProps = {
   label: string;
   value: string;
-  change: string;
-  isImprovement: boolean;
   helper: string;
   tone: "accent" | "success" | "warning" | "danger" | "muted";
 };
@@ -18,8 +16,6 @@ const toneStyles = {
 export function SummaryCard({
   label,
   value,
-  change,
-  isImprovement,
   helper,
   tone,
 }: SummaryCardProps) {
@@ -34,14 +30,7 @@ export function SummaryCard({
       <p className="mt-5 text-2xl font-bold tracking-[-0.04em] text-foreground">
         {value}
       </p>
-      <div className="mt-3 flex items-center gap-2 text-xs">
-        <span
-          className={`font-bold ${isImprovement ? "text-success" : "text-accent"}`}
-        >
-          {change}
-        </span>
-        <span className="text-muted-foreground">{helper}</span>
-      </div>
+      <p className="mt-3 text-xs text-muted-foreground">{helper}</p>
     </article>
   );
 }
