@@ -1,36 +1,10 @@
-import dashboardFixture from "../../../data/seeds/dashboard.json";
-import inquiryFixture from "../../../data/seeds/inquiries.json";
-import type { InquiryBadgeTone } from "@/lib/inquiry-data";
-
-export type TrendPoint = (typeof dashboardFixture.daily_trend)[number];
-
-export type DistributionItem = {
-  key: string;
-  label: string;
-  count: number;
-  tone: "accent" | "success" | "warning" | "danger" | "muted";
-};
-
-export type AttentionInquiry = {
-  id: string;
-  subject: string;
-  preview: string;
-  customerName: string;
-  customerEmail: string;
-  intentLabel: string;
-  stageLabel: string;
-  statusTone: InquiryBadgeTone;
-  receivedAt: string;
-};
-
-type SummaryCardData = {
-  label: string;
-  value: string;
-  change: string;
-  isImprovement: boolean;
-  helper: string;
-  tone: "accent" | "success" | "warning" | "danger" | "muted";
-};
+import dashboardFixture from "../../../../data/seeds/dashboard.json";
+import inquiryFixture from "../../../../data/seeds/inquiries.json";
+import { formatChange, mapDistribution } from "@/lib/dashboard/mapper";
+import type {
+  AttentionInquiry,
+  SummaryCardData,
+} from "@/lib/dashboard/types";
 
 const intentLabels: Record<string, string> = {
   DELIVERY_STATUS: "배송 현황",
@@ -47,31 +21,6 @@ const stageLabels: Record<string, string> = {
   MANUAL_REQUIRED: "직접 확인 필요",
   FAILED: "처리 실패",
 };
-
-const tones: DistributionItem["tone"][] = [
-  "accent",
-  "success",
-  "warning",
-  "danger",
-  "muted",
-];
-
-function formatChange(value: number) {
-  const sign = value > 0 ? "+" : "";
-  return `${sign}${value.toFixed(1)}%`;
-}
-
-function toDistribution<T extends { count: number; label: string }>(
-  items: T[],
-  keyFor: (item: T) => string,
-): DistributionItem[] {
-  return items.map((item, index) => ({
-    key: keyFor(item),
-    label: item.label,
-    count: item.count,
-    tone: tones[index % tones.length],
-  }));
-}
 
 // JSON 목데이터를 대시보드 컴포넌트에서 쓰기 좋은 형태로 정리함
 export function getDashboardData() {
@@ -142,15 +91,15 @@ export function getDashboardData() {
     periodLabel: `${dashboardFixture.period.from.replaceAll("-", ".")} – ${dashboardFixture.period.to.replaceAll("-", ".")}`,
     summaryCards,
     dailyTrend: dashboardFixture.daily_trend,
-    statusDistribution: toDistribution(
+    statusDistribution: mapDistribution(
       dashboardFixture.status_distribution,
       (item) => item.status,
     ),
-    intentDistribution: toDistribution(
+    intentDistribution: mapDistribution(
       dashboardFixture.intent_distribution,
       (item) => item.intent,
     ),
-    completionDistribution: toDistribution(
+    completionDistribution: mapDistribution(
       dashboardFixture.completion_distribution,
       (item) => item.completion_type,
     ),

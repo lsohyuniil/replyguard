@@ -1,4 +1,4 @@
-import type { DistributionItem } from "@/lib/dashboard-data";
+import type { DistributionItem } from "@/lib/dashboard";
 
 type DistributionChartProps = {
   title: string;

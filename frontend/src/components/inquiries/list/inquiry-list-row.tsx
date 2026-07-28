@@ -1,6 +1,6 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardRounded";
 import Link from "next/link";
-import type { InquiryBadgeTone } from "@/lib/inquiry-data";
+import type { InquiryBadgeTone } from "@/lib/inquiries";
 
 type InquiryListRowProps = {
   id: string;

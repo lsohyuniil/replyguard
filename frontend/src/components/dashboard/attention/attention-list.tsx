@@ -1,7 +1,7 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardRounded";
 import Link from "next/link";
-import { InquiryListRow } from "@/components/inquiries/inquiry-list-row";
-import type { AttentionInquiry } from "@/lib/dashboard-data";
+import { InquiryListRow } from "@/components/inquiries";
+import type { AttentionInquiry } from "@/lib/dashboard";
 
 type AttentionListProps = {
   inquiries: AttentionInquiry[];
