@@ -8,6 +8,7 @@ import { InquiryDetailHeader } from "@/components/inquiries/detail/inquiry-detai
 import { MessageThread } from "@/components/inquiries/detail/message-thread";
 import { OrderSummary } from "@/components/inquiries/detail/order-summary";
 import { PolicyEvidence } from "@/components/inquiries/detail/policy-evidence";
+import { ReviewStatusBanner } from "@/components/inquiries/detail/review-status-banner";
 import { useInquiryDetailQuery } from "@/hooks/inquiries/use-inquiry-detail-query";
 import { ApiError } from "@/lib/api/client";
 
@@ -35,11 +36,19 @@ export function InquiryDetail({ inquiryId }: { inquiryId: string }) {
   return (
     <div className="mx-auto w-full max-w-[1440px] space-y-7">
       <InquiryDetailHeader inquiry={inquiry} />
+      <ReviewStatusBanner stage={inquiry.stage} />
 
       <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.75fr)]">
         <div className="space-y-6">
-          <MessageThread messages={inquiry.messages} />
-          <AnswerDraftCard draft={inquiry.answer_draft} />
+          <MessageThread
+            messages={inquiry.messages}
+            gmailThreadId={inquiry.gmail_thread_id}
+          />
+          <AnswerDraftCard
+            draft={inquiry.answer_draft}
+            orderNumber={inquiry.order?.order_number ?? null}
+            policyTitles={inquiry.policies.map((policy) => policy.title)}
+          />
         </div>
 
         <aside className="space-y-6">
@@ -50,6 +59,11 @@ export function InquiryDetail({ inquiryId }: { inquiryId: string }) {
           <InquiryContext
             collectedInformation={inquiry.collected_information}
             requiredAction={inquiry.required_action}
+            orderNumber={inquiry.order?.order_number ?? null}
+            attachmentCount={inquiry.messages.reduce(
+              (count, message) => count + message.attachments.length,
+              0,
+            )}
           />
           <PolicyEvidence policies={inquiry.policies} />
           <AgentRunCard agentRun={inquiry.agent_run} />

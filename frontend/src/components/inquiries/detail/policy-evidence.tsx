@@ -5,7 +5,8 @@ import type { InquiryPolicy } from "@/lib/inquiries";
 export function PolicyEvidence({ policies }: { policies: InquiryPolicy[] }) {
   return (
     <DetailSection
-      title="정책 근거"
+      title="참고 정책"
+      description={`검색 근거 ${policies.length}건`}
       icon={<PolicyIcon className="size-5 text-accent" />}
     >
       {policies.length === 0 ? (
@@ -15,10 +16,13 @@ export function PolicyEvidence({ policies }: { policies: InquiryPolicy[] }) {
       ) : (
         <ul className="space-y-4">
           {policies.map((policy) => (
-            <li key={policy.version_id}>
+            <li
+              key={policy.version_id}
+              className="rounded-xl border border-accent/20 bg-accent-soft/40 p-4"
+            >
               <div className="flex items-center justify-between gap-3">
                 <p className="font-bold text-foreground">{policy.title}</p>
-                <span className="shrink-0 rounded-md bg-success-soft px-2 py-1 text-xs font-bold text-success">
+                <span className="shrink-0 rounded-md bg-surface px-2 py-1 text-xs font-bold text-accent">
                   v{policy.version}
                 </span>
               </div>
@@ -29,12 +33,15 @@ export function PolicyEvidence({ policies }: { policies: InquiryPolicy[] }) {
                 {policy.chunks.map((chunk) => (
                   <blockquote
                     key={chunk.id}
-                    className="rounded-xl border-l-4 border-accent bg-surface-muted px-4 py-3 text-sm leading-6 text-foreground"
+                    className="mt-3 text-sm leading-6 text-foreground"
                   >
                     {chunk.content}
                   </blockquote>
                 ))}
               </div>
+              <p className="mt-3 text-xs font-bold text-accent">
+                원문에서 확인
+              </p>
             </li>
           ))}
         </ul>

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 type DetailSectionProps = {
   title: string;
-  description?: string;
+  description?: ReactNode;
   icon?: ReactNode;
   children: ReactNode;
 };
@@ -24,7 +24,9 @@ export function DetailSection({
           <h2 className="font-bold text-foreground">{title}</h2>
         </div>
         {description && (
-          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+          <div className="mt-1 text-sm text-muted-foreground">
+            {description}
+          </div>
         )}
       </div>
       <div className="p-5 sm:p-6">{children}</div>
