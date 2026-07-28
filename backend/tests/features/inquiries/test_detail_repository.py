@@ -205,6 +205,12 @@ def test_get_detail_combines_inquiry_relations_and_sorted_lists() -> None:
     assert detail.policies[0].title == "의류 교환 정책"
     assert detail.agent_run is not None
     assert detail.answer_draft is not None
+    inquiry_select = next(
+        operation
+        for operation in client.queries["inquiries"].operations
+        if operation[0] == "select"
+    )
+    assert "orders!inquiries_order_id_fkey" in inquiry_select[1]
     assert client.table_names == [
         "inquiries",
         "inquiry_messages",

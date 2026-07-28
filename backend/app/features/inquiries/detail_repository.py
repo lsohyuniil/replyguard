@@ -9,7 +9,7 @@ INQUIRY_DETAIL_COLUMNS = (
     "id,gmail_thread_id,customer_name,customer_email,subject,preview,"
     "intent,status,stage,completion_type,collected_information,"
     "required_action,active_agent_run_id,received_at,updated_at,"
-    "order:orders("
+    "order:orders!inquiries_order_id_fkey("
     "id,order_number,customer_email,status,ordered_at,currency,total_amount,"
     "order_items(id,sku,name,quantity,unit_price),"
     "shipments("
