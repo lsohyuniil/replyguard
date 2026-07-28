@@ -3,12 +3,21 @@ import Link from "next/link";
 import { InquiryListRow } from "@/components/inquiries";
 import type { AttentionInquiry } from "@/lib/dashboard";
 
-type AttentionListProps = {
-  inquiries: AttentionInquiry[];
-};
+type AttentionListState =
+  | { kind: "loading" }
+  | { kind: "error"; onRetry: () => void }
+  | {
+      kind: "success";
+      inquiries: AttentionInquiry[];
+      totalCount: number;
+    };
 
-export function AttentionList({ inquiries }: AttentionListProps) {
-  const visibleInquiries = inquiries.slice(0, 4);
+type AttentionListProps = { state: AttentionListState };
+
+export function AttentionList({ state }: AttentionListProps) {
+  const totalCount = state.kind === "success" ? state.totalCount : 0;
+  const countLabel =
+    state.kind === "success" ? `${state.totalCount}건` : "—";
 
   return (
     <section
@@ -25,28 +34,13 @@ export function AttentionList({ inquiries }: AttentionListProps) {
           </p>
         </div>
         <span className="rounded-full bg-warning-soft px-3 py-1 text-xs font-bold text-warning">
-          {inquiries.length}건
+          {countLabel}
         </span>
       </div>
 
-      {inquiries.length === 0 ? (
-        <div className="px-6 py-12 text-center text-sm text-muted-foreground">
-          지금 확인할 문의가 없습니다.
-        </div>
-      ) : (
-        <ul className="divide-y divide-border">
-          {visibleInquiries.map((inquiry) => (
-            <li key={inquiry.id}>
-              <InquiryListRow
-                {...inquiry}
-                statusLabel={inquiry.stageLabel}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+      <AttentionListBody state={state} />
 
-      {inquiries.length > 0 && (
+      {state.kind === "success" && totalCount > 0 && (
         <div className="border-t border-border px-5 py-4 sm:px-6">
           <Link
             href="/inquiries?status=ACTION_REQUIRED"
@@ -58,5 +52,56 @@ export function AttentionList({ inquiries }: AttentionListProps) {
         </div>
       )}
     </section>
+  );
+}
+
+function AttentionListBody({ state }: { state: AttentionListState }) {
+  if (state.kind === "loading") {
+    return (
+      <div
+        role="status"
+        className="px-6 py-12 text-center text-sm text-muted-foreground"
+      >
+        확인할 문의를 불러오는 중입니다.
+      </div>
+    );
+  }
+
+  if (state.kind === "error") {
+    return (
+      <div role="alert" className="px-6 py-12 text-center">
+        <p className="text-sm font-semibold text-foreground">
+          확인 필요 문의를 불러오지 못했습니다.
+        </p>
+        <button
+          type="button"
+          onClick={state.onRetry}
+          className="mt-4 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground"
+        >
+          다시 시도
+        </button>
+      </div>
+    );
+  }
+
+  if (state.inquiries.length === 0) {
+    return (
+      <div className="px-6 py-12 text-center text-sm text-muted-foreground">
+        지금 확인할 문의가 없습니다.
+      </div>
+    );
+  }
+
+  return (
+    <ul className="divide-y divide-border">
+      {state.inquiries.slice(0, 4).map((inquiry) => (
+        <li key={inquiry.id}>
+          <InquiryListRow
+            {...inquiry}
+            statusLabel={inquiry.stageLabel}
+          />
+        </li>
+      ))}
+    </ul>
   );
 }
