@@ -1,4 +1,5 @@
 export {
+  intentLabels,
   inquiryIntentOptions,
   inquiryStatusOptions,
 } from "@/lib/inquiries/constants";
