@@ -6,6 +6,12 @@ export {
 export { inquiryReceivedAtFormatter } from "@/lib/inquiries/formatters";
 export { mapInquiryListItem } from "@/lib/inquiries/mapper";
 export type {
+  InquiryDetailResponse,
+  InquiryMessage,
+  InquiryOrder,
+  InquiryPolicy,
+} from "@/lib/inquiries/detail-types";
+export type {
   ApiInquiryIntent,
   ApiInquiryStatus,
   InquiryBadgeTone,

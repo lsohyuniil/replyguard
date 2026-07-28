@@ -3,6 +3,7 @@ import type {
   InquiryListParams,
   InquiryListResponse,
 } from "@/lib/inquiries/types";
+import type { InquiryDetailResponse } from "@/lib/inquiries/detail-types";
 
 export function fetchInquiryList(
   params: InquiryListParams,
@@ -25,6 +26,16 @@ export function fetchInquiryList(
 
   return apiFetch<InquiryListResponse>(
     `/inquiries?${searchParams.toString()}`,
+    { signal },
+  );
+}
+
+export function fetchInquiryDetail(
+  inquiryId: string,
+  signal?: AbortSignal,
+) {
+  return apiFetch<InquiryDetailResponse>(
+    `/inquiries/${encodeURIComponent(inquiryId)}`,
     { signal },
   );
 }
