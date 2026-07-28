@@ -54,7 +54,9 @@ export function InquiryDetailHeader({
         </div>
         <div className="shrink-0 text-sm text-muted-foreground lg:text-right">
           <p>수신 {formatDetailDateTime(inquiry.received_at)}</p>
-          <p className="mt-1">수정 {formatDetailDateTime(inquiry.updated_at)}</p>
+          <p className="mt-1">
+            수정 {formatDetailDateTime(inquiry.updated_at)}
+          </p>
         </div>
       </div>
     </header>

@@ -5,9 +5,13 @@ import { formatCollectedValue } from "@/lib/inquiries/detail-formatters";
 export function InquiryContext({
   collectedInformation,
   requiredAction,
+  orderNumber,
+  attachmentCount,
 }: {
   collectedInformation: Record<string, unknown>;
   requiredAction: Record<string, unknown> | null;
+  orderNumber: string | null;
+  attachmentCount: number;
 }) {
   const collectedEntries = Object.entries(collectedInformation);
   const actionLabel =
@@ -17,7 +21,7 @@ export function InquiryContext({
 
   return (
     <DetailSection
-      title="처리 정보"
+      title="필수정보 수집 결과"
       icon={<AssignmentIcon className="size-5 text-accent" />}
     >
       {actionLabel && (
@@ -29,25 +33,67 @@ export function InquiryContext({
         </div>
       )}
 
-      {collectedEntries.length === 0 ? (
+      <dl className="divide-y divide-border">
+        <InformationRow
+          label="주문 식별"
+          value={orderNumber ? `${orderNumber} 확인` : "확인 필요"}
+          complete={Boolean(orderNumber)}
+        />
+        {collectedEntries.map(([key, value]) => (
+          <InformationRow
+            key={key}
+            label={collectedInformationLabels[key] ?? key}
+            value={formatCollectedValue(value)}
+            complete
+          />
+        ))}
+        {attachmentCount > 0 && (
+          <InformationRow
+            label="첨부파일"
+            value={`${attachmentCount}개 첨부됨`}
+            complete
+          />
+        )}
+      </dl>
+
+      {collectedEntries.length === 0 &&
+      !orderNumber &&
+      attachmentCount === 0 ? (
         <p className="text-sm text-muted-foreground">
           수집된 추가 정보가 없습니다.
         </p>
-      ) : (
-        <dl className="space-y-3">
-          {collectedEntries.map(([key, value]) => (
-            <div
-              key={key}
-              className="flex items-start justify-between gap-4 text-sm"
-            >
-              <dt className="text-muted-foreground">{key}</dt>
-              <dd className="text-right font-semibold text-foreground">
-                {formatCollectedValue(value)}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      )}
+      ) : null}
     </DetailSection>
   );
 }
+
+function InformationRow({
+  label,
+  value,
+  complete,
+}: {
+  label: string;
+  value: string;
+  complete: boolean;
+}) {
+  return (
+    <div className="flex items-start justify-between gap-4 py-3 text-sm first:pt-0 last:pb-0">
+      <dt className="text-muted-foreground">{label}</dt>
+      <dd
+        className={`text-right font-bold ${
+          complete ? "text-success" : "text-warning"
+        }`}
+      >
+        {value}
+      </dd>
+    </div>
+  );
+}
+
+const collectedInformationLabels: Record<string, string> = {
+  desired_size: "희망 사이즈",
+  worn_or_washed: "착용·세탁 여부",
+  refund_reason: "환불 요청 사유",
+  damage_type: "상품 상태",
+  photo_attached: "상품 사진",
+};
