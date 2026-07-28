@@ -1,9 +1,15 @@
 from typing import Annotated
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from supabase import Client
 
 from app.api.dependencies import provide_supabase_client
+from app.features.inquiries.detail_models import InquiryDetailResponse
+from app.features.inquiries.detail_repository import (
+    InquiryDetailRepository,
+    InquiryNotFoundError,
+)
 from app.features.inquiries.models import (
     InquiryIntent,
     InquiryListResponse,
@@ -18,6 +24,12 @@ def provide_inquiry_repository(
     client: Annotated[Client, Depends(provide_supabase_client)],
 ) -> InquiryRepository:
     return InquiryRepository(client)
+
+
+def provide_inquiry_detail_repository(
+    client: Annotated[Client, Depends(provide_supabase_client)],
+) -> InquiryDetailRepository:
+    return InquiryDetailRepository(client)
 
 
 @router.get("", response_model=InquiryListResponse)
@@ -43,4 +55,26 @@ def get_inquiries(
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="inquiries unavailable",
+        ) from exc
+
+
+@router.get("/{inquiry_id}", response_model=InquiryDetailResponse)
+def get_inquiry_detail(
+    inquiry_id: UUID,
+    repository: Annotated[
+        InquiryDetailRepository,
+        Depends(provide_inquiry_detail_repository),
+    ],
+) -> InquiryDetailResponse:
+    try:
+        return repository.get_detail(inquiry_id)
+    except InquiryNotFoundError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="inquiry not found",
+        ) from exc
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="inquiry detail unavailable",
         ) from exc
