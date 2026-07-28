@@ -1,6 +1,5 @@
 import { InquiryInbox } from "@/components/inquiries";
 import {
-  getInquiryListData,
   isInquiryStatus,
   type InquiryStatus,
 } from "@/lib/inquiries";
@@ -12,7 +11,6 @@ type InquiriesPageProps = {
 export default async function InquiriesPage({
   searchParams,
 }: InquiriesPageProps) {
-  const inquiryData = getInquiryListData();
   const statusParam = (await searchParams).status;
   const initialStatus: InquiryStatus = isInquiryStatus(statusParam)
     ? statusParam
@@ -30,7 +28,7 @@ export default async function InquiriesPage({
         </p>
       </section>
 
-      <InquiryInbox {...inquiryData} initialStatus={initialStatus} />
+      <InquiryInbox initialStatus={initialStatus} />
     </div>
   );
 }

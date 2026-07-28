@@ -1,11 +1,13 @@
 import type {
+  ApiInquiryIntent,
   InquiryBadgeTone,
+  InquiryOption,
   InquiryStatus,
 } from "@/lib/inquiries/types";
 
 export const INQUIRY_PAGE_SIZE = 5;
 
-export const intentLabels: Record<string, string> = {
+export const intentLabels: Record<ApiInquiryIntent, string> = {
   DELIVERY_STATUS: "배송 현황",
   POLICY_FAQ: "정책 FAQ",
   EXCHANGE: "교환",
@@ -42,3 +44,10 @@ export const inquiryStatusOptions: {
   { value: "ACTION_REQUIRED", label: "확인 필요" },
   { value: "COMPLETED", label: "처리 완료" },
 ];
+
+export const inquiryIntentOptions: InquiryOption[] = Object.entries(
+  intentLabels,
+).map(([value, label]) => ({
+  value: value as ApiInquiryIntent,
+  label,
+}));

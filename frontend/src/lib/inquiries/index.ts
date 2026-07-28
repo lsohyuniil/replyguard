@@ -1,9 +1,20 @@
-export { inquiryStatusOptions } from "@/lib/inquiries/constants";
-export { getInquiryListData } from "@/lib/inquiries/mock-query";
+export {
+  inquiryIntentOptions,
+  inquiryStatusOptions,
+} from "@/lib/inquiries/constants";
+export { inquiryReceivedAtFormatter } from "@/lib/inquiries/formatters";
+export { mapInquiryListItem } from "@/lib/inquiries/mapper";
 export type {
+  ApiInquiryIntent,
+  ApiInquiryStatus,
   InquiryBadgeTone,
+  InquiryIntent,
   InquiryListItem,
+  InquiryListParams,
+  InquiryListResponse,
   InquiryOption,
+  InquirySource,
+  InquiryStage,
   InquiryStatus,
 } from "@/lib/inquiries/types";
 
