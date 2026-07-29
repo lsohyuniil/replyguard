@@ -25,7 +25,7 @@ where id in (
 insert into public.operators (id, email, name, created_at)
 values (
   '00000000-0000-4000-8000-000000000001',
-  'operator@replyguard.example.com',
+  'admin@example.com',
   'ReplyGuard 운영자',
   '2026-07-01T00:00:00Z'
 );

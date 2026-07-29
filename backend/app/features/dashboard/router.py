@@ -5,7 +5,8 @@ from zoneinfo import ZoneInfo
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from supabase import Client
 
-from app.api.dependencies import provide_supabase_client
+from app.api.dependencies import provide_current_operator, provide_supabase_client
+from app.features.auth.models import CurrentOperator
 from app.features.dashboard.models import DashboardSummaryResponse
 from app.features.dashboard.repository import DashboardRepository
 
@@ -14,8 +15,9 @@ router = APIRouter(prefix="/dashboard", tags=["dashboard"])
 
 def provide_dashboard_repository(
     client: Annotated[Client, Depends(provide_supabase_client)],
+    operator: Annotated[CurrentOperator, Depends(provide_current_operator)],
 ) -> DashboardRepository:
-    return DashboardRepository(client)
+    return DashboardRepository(client, operator.id)
 
 
 def _today_in_seoul() -> date:

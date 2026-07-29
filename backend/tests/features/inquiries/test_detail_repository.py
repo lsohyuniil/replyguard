@@ -9,6 +9,8 @@ from app.features.inquiries.detail_repository import (
     InquiryNotFoundError,
 )
 
+OPERATOR_ID = UUID("00000000-0000-4000-8000-000000000001")
+
 
 @dataclass
 class FakeResponse:
@@ -195,7 +197,7 @@ def test_get_detail_combines_inquiry_relations_and_sorted_lists() -> None:
     client = fake_client(inquiry_row())
     inquiry_id = UUID("30000000-0000-4000-8000-000000000003")
 
-    detail = InquiryDetailRepository(client).get_detail(inquiry_id)
+    detail = InquiryDetailRepository(client, OPERATOR_ID).get_detail(inquiry_id)
 
     assert detail.id == inquiry_id
     assert detail.order is not None
@@ -211,6 +213,12 @@ def test_get_detail_combines_inquiry_relations_and_sorted_lists() -> None:
         if operation[0] == "select"
     )
     assert "orders!inquiries_order_id_fkey" in inquiry_select[1]
+    assert "gmail_connections!inner" in inquiry_select[1]
+    assert (
+        "eq",
+        "gmail_connections.operator_id",
+        str(OPERATOR_ID),
+    ) in client.queries["inquiries"].operations
     assert client.table_names == [
         "inquiries",
         "inquiry_messages",
@@ -232,7 +240,7 @@ def test_get_detail_stops_when_inquiry_does_not_exist() -> None:
     client = fake_client(None)
 
     with pytest.raises(InquiryNotFoundError):
-        InquiryDetailRepository(client).get_detail(
+        InquiryDetailRepository(client, OPERATOR_ID).get_detail(
             UUID("30000000-0000-4000-8000-000000000099")
         )
 

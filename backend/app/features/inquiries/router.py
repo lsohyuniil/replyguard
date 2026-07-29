@@ -4,7 +4,8 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from supabase import Client
 
-from app.api.dependencies import provide_supabase_client
+from app.api.dependencies import provide_current_operator, provide_supabase_client
+from app.features.auth.models import CurrentOperator
 from app.features.inquiries.detail_models import InquiryDetailResponse
 from app.features.inquiries.detail_repository import (
     InquiryDetailRepository,
@@ -22,14 +23,16 @@ router = APIRouter(prefix="/inquiries", tags=["inquiries"])
 
 def provide_inquiry_repository(
     client: Annotated[Client, Depends(provide_supabase_client)],
+    operator: Annotated[CurrentOperator, Depends(provide_current_operator)],
 ) -> InquiryRepository:
-    return InquiryRepository(client)
+    return InquiryRepository(client, operator.id)
 
 
 def provide_inquiry_detail_repository(
     client: Annotated[Client, Depends(provide_supabase_client)],
+    operator: Annotated[CurrentOperator, Depends(provide_current_operator)],
 ) -> InquiryDetailRepository:
-    return InquiryDetailRepository(client)
+    return InquiryDetailRepository(client, operator.id)
 
 
 @router.get("", response_model=InquiryListResponse)

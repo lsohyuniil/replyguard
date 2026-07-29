@@ -1,4 +1,5 @@
 from typing import Any
+from uuid import UUID
 
 from supabase import Client
 
@@ -11,7 +12,7 @@ from app.features.inquiries.models import (
 
 INQUIRY_LIST_COLUMNS = (
     "id,customer_name,customer_email,subject,preview,"
-    "intent,status,stage,received_at"
+    "intent,status,stage,received_at,gmail_connections!inner()"
 )
 SEARCH_COLUMNS = ("customer_name", "customer_email", "subject", "preview")
 
@@ -32,8 +33,9 @@ def _build_search_filter(search: str) -> str:
 
 
 class InquiryRepository:
-    def __init__(self, client: Client) -> None:
+    def __init__(self, client: Client, operator_id: UUID) -> None:
         self._client = client
+        self._operator_id = operator_id
 
     def list_inquiries(
         self,
@@ -47,7 +49,7 @@ class InquiryRepository:
         query = self._client.table("inquiries").select(
             INQUIRY_LIST_COLUMNS,
             count="exact",
-        )
+        ).eq("gmail_connections.operator_id", str(self._operator_id))
 
         if status is not None:
             query = query.eq("status", status.value)
@@ -71,7 +73,10 @@ class InquiryRepository:
         )
 
     def _get_status_counts(self) -> InquiryStatusCounts:
-        result = self._client.rpc("get_inquiry_status_counts").execute()
+        result = self._client.rpc(
+            "get_inquiry_status_counts",
+            {"p_operator_id": str(self._operator_id)},
+        ).execute()
         if not result.data:
             raise RuntimeError("Inquiry status counts query returned no rows")
 
