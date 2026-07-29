@@ -11,6 +11,7 @@ import { PolicyEvidence } from "@/components/inquiries/detail/policy-evidence";
 import { ReviewStatusBanner } from "@/components/inquiries/detail/review-status-banner";
 import { useInquiryDetailQuery } from "@/hooks/inquiries/use-inquiry-detail-query";
 import { ApiError } from "@/lib/api/client";
+import { getUserFacingErrorMessage } from "@/lib/api/error-message";
 
 export function InquiryDetail({ inquiryId }: { inquiryId: string }) {
   const inquiryQuery = useInquiryDetailQuery(inquiryId);
@@ -22,6 +23,7 @@ export function InquiryDetail({ inquiryId }: { inquiryId: string }) {
   if (inquiryQuery.isError) {
     return (
       <InquiryDetailError
+        error={inquiryQuery.error}
         notFound={
           inquiryQuery.error instanceof ApiError &&
           inquiryQuery.error.status === 404
@@ -85,9 +87,11 @@ function InquiryDetailLoading() {
 }
 
 function InquiryDetailError({
+  error,
   notFound,
   onRetry,
 }: {
+  error: unknown;
   notFound: boolean;
   onRetry: () => void;
 }) {
@@ -105,7 +109,7 @@ function InquiryDetailError({
         <p className="mt-2 text-sm text-muted-foreground">
           {notFound
             ? "삭제되었거나 잘못된 문의 주소입니다."
-            : "일시적으로 정보를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요."}
+            : getUserFacingErrorMessage(error)}
         </p>
         <div className="mt-6 flex justify-center gap-3">
           <Link

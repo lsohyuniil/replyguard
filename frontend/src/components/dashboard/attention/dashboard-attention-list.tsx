@@ -31,6 +31,7 @@ export function DashboardAttentionList() {
       <AttentionList
         state={{
           kind: "error",
+          error: inquiryQuery.error,
           onRetry: () => inquiryQuery.refetch(),
         }}
       />
