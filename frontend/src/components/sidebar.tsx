@@ -7,6 +7,7 @@ import PolicyIcon from "@mui/icons-material/PolicyRounded";
 import SettingsIcon from "@mui/icons-material/SettingsRounded";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogoutButton } from "@/components/auth/logout-button";
 
 type SidebarProps = {
   collapsed?: boolean;
@@ -113,6 +114,9 @@ export function Sidebar({
           })}
         </ul>
       </nav>
+      <div className="border-t border-border p-3">
+        <LogoutButton showLabel={showLabels} />
+      </div>
     </aside>
   );
 }
