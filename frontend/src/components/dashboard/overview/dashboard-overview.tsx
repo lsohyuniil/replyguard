@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { DistributionChart } from "@/components/dashboard/charts/distribution-chart";
 import { InquiryTrendChart } from "@/components/dashboard/charts/inquiry-trend-chart";
 import { SummaryCard } from "@/components/dashboard/summary/summary-card";
+import { QueryErrorState } from "@/components/ui/query-error-state";
 import { useDashboardSummaryQuery } from "@/hooks/dashboard/use-dashboard-summary-query";
 import { mapDashboardData } from "@/lib/dashboard";
 
@@ -23,7 +24,16 @@ export function DashboardOverview() {
 
   if (dashboardQuery.isError || !dashboard) {
     return (
-      <DashboardOverviewError onRetry={() => dashboardQuery.refetch()} />
+      <>
+        <DashboardHeader />
+        <div className="rounded-2xl border border-border bg-surface">
+          <QueryErrorState
+            title="대시보드 정보를 불러오지 못했습니다."
+            error={dashboardQuery.error}
+            onRetry={() => dashboardQuery.refetch()}
+          />
+        </div>
+      </>
     );
   }
 
@@ -95,34 +105,6 @@ function DashboardOverviewLoading() {
         className="grid min-h-72 place-items-center rounded-2xl border border-border bg-surface text-sm text-muted-foreground"
       >
         대시보드 데이터를 불러오는 중입니다.
-      </div>
-    </>
-  );
-}
-
-function DashboardOverviewError({ onRetry }: { onRetry: () => void }) {
-  return (
-    <>
-      <DashboardHeader />
-      <div
-        role="alert"
-        className="grid min-h-72 place-items-center rounded-2xl border border-border bg-surface px-6 text-center"
-      >
-        <div>
-          <p className="font-semibold text-foreground">
-            대시보드 데이터를 불러오지 못했습니다.
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            백엔드 연결을 확인한 뒤 다시 시도해 주세요.
-          </p>
-          <button
-            type="button"
-            onClick={onRetry}
-            className="mt-5 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground"
-          >
-            다시 시도
-          </button>
-        </div>
       </div>
     </>
   );

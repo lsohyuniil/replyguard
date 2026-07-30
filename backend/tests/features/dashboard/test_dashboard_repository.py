@@ -1,10 +1,13 @@
 from dataclasses import dataclass
 from datetime import date
 from typing import Any
+from uuid import UUID
 
 import pytest
 
 from app.features.dashboard.repository import DashboardRepository
+
+OPERATOR_ID = UUID("00000000-0000-4000-8000-000000000001")
 
 
 @dataclass
@@ -80,7 +83,7 @@ def dashboard_result() -> dict[str, Any]:
 def test_get_summary_calls_dashboard_rpc_with_iso_dates() -> None:
     client = FakeSupabaseClient(FakeResponse(data=dashboard_result()))
 
-    response = DashboardRepository(client).get_summary(
+    response = DashboardRepository(client, OPERATOR_ID).get_summary(
         from_date=date(2026, 7, 22),
         to_date=date(2026, 7, 28),
     )
@@ -88,6 +91,7 @@ def test_get_summary_calls_dashboard_rpc_with_iso_dates() -> None:
     assert response.summary.total_inquiries == 6
     assert client.rpc_name == "get_dashboard_summary"
     assert client.rpc_params == {
+        "p_operator_id": str(OPERATOR_ID),
         "from_date": "2026-07-22",
         "to_date": "2026-07-28",
         "timezone_name": "Asia/Seoul",
@@ -101,7 +105,7 @@ def test_get_summary_rejects_empty_rpc_response() -> None:
         RuntimeError,
         match="Dashboard summary query returned no data",
     ):
-        DashboardRepository(client).get_summary(
+        DashboardRepository(client, OPERATOR_ID).get_summary(
             from_date=date(2026, 7, 22),
             to_date=date(2026, 7, 28),
         )

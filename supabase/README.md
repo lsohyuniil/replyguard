@@ -49,3 +49,19 @@ supabase db reset
 현재 migration은 모든 업무 테이블에 RLS를 활성화하지만 클라이언트용 정책은
 아직 만들지 않았습니다. 프론트에서 Supabase에 직접 접근하지 않고 FastAPI가
 service role로 접근하는 MVP 구조를 전제로 합니다.
+
+## 운영자 Auth 연결
+
+`20260728030000_operator_auth.sql` 적용 후 Supabase Dashboard의
+Authentication에서 운영자 계정을 생성합니다. 생성된 사용자의 UUID를 Mock
+운영자와 한 번 연결해야 로그인한 사용자가 API에 접근할 수 있습니다.
+
+```sql
+update public.operators
+set auth_user_id = '<Authentication 사용자 UUID>'
+where id = '00000000-0000-4000-8000-000000000001';
+```
+
+`seed.sql`을 다시 적용하면 Mock 운영자 레코드가 재생성되므로 위 연결도 다시
+실행합니다. 가입 화면은 제공하지 않으며 Supabase에서 미리 생성하고 연결한
+운영자만 로그인할 수 있습니다.

@@ -1,11 +1,12 @@
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardRounded";
 import Link from "next/link";
 import { InquiryListRow } from "@/components/inquiries";
+import { QueryErrorState } from "@/components/ui/query-error-state";
 import type { AttentionInquiry } from "@/lib/dashboard";
 
 type AttentionListState =
   | { kind: "loading" }
-  | { kind: "error"; onRetry: () => void }
+  | { kind: "error"; error: unknown; onRetry: () => void }
   | {
       kind: "success";
       inquiries: AttentionInquiry[];
@@ -69,18 +70,12 @@ function AttentionListBody({ state }: { state: AttentionListState }) {
 
   if (state.kind === "error") {
     return (
-      <div role="alert" className="px-6 py-12 text-center">
-        <p className="text-sm font-semibold text-foreground">
-          확인 필요 문의를 불러오지 못했습니다.
-        </p>
-        <button
-          type="button"
-          onClick={state.onRetry}
-          className="mt-4 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground"
-        >
-          다시 시도
-        </button>
-      </div>
+      <QueryErrorState
+        title="확인 필요 문의를 불러오지 못했습니다."
+        error={state.error}
+        onRetry={state.onRetry}
+        compact
+      />
     );
   }
 

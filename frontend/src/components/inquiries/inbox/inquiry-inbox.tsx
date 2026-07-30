@@ -6,6 +6,7 @@ import { InquiryIntentFilter } from "@/components/inquiries/inbox/inquiry-intent
 import { InquirySearch } from "@/components/inquiries/inbox/inquiry-search";
 import { InquiryStatusFilter } from "@/components/inquiries/inbox/inquiry-status-filter";
 import { InquiryList } from "@/components/inquiries/list/inquiry-list";
+import { QueryErrorState } from "@/components/ui/query-error-state";
 import { useInquiryFilters } from "@/hooks/inquiries/use-inquiry-filters";
 import { useInquiriesQuery } from "@/hooks/inquiries/use-inquiries-query";
 import {
@@ -91,21 +92,12 @@ export function InquiryInbox({
             문의를 불러오는 중입니다.
           </div>
         ) : inquiryQuery.isError ? (
-          <div role="alert" className="px-6 py-16 text-center">
-            <p className="font-semibold text-foreground">
-              문의를 불러오지 못했습니다.
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              백엔드 연결을 확인한 뒤 다시 시도해 주세요.
-            </p>
-            <button
-              type="button"
-              onClick={() => inquiryQuery.refetch()}
-              className="mt-5 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-accent-foreground"
-            >
-              다시 시도
-            </button>
-          </div>
+          <QueryErrorState
+            title="문의 목록을 불러오지 못했습니다."
+            error={inquiryQuery.error}
+            onRetry={() => inquiryQuery.refetch()}
+            compact
+          />
         ) : inquiries.length === 0 ? (
           <InquiryEmptyState onReset={filters.resetFilters} />
         ) : (

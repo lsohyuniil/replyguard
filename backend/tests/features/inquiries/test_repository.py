@@ -1,8 +1,11 @@
 from dataclasses import dataclass
 from typing import Any
+from uuid import UUID
 
 from app.features.inquiries.models import InquiryIntent, InquiryStatus
 from app.features.inquiries.repository import InquiryRepository
+
+OPERATOR_ID = UUID("00000000-0000-4000-8000-000000000001")
 
 
 @dataclass
@@ -51,13 +54,15 @@ class FakeSupabaseClient:
         self.status_query = FakeQuery(status_response)
         self.table_name: str | None = None
         self.rpc_name: str | None = None
+        self.rpc_params: dict[str, str] | None = None
 
     def table(self, name: str) -> FakeQuery:
         self.table_name = name
         return self.list_query
 
-    def rpc(self, name: str) -> FakeQuery:
+    def rpc(self, name: str, params: dict[str, str]) -> FakeQuery:
         self.rpc_name = name
+        self.rpc_params = params
         return self.status_query
 
 
@@ -91,7 +96,7 @@ def test_list_inquiries_applies_filters_pagination_and_global_status_counts() ->
         ),
     )
 
-    response = InquiryRepository(client).list_inquiries(
+    response = InquiryRepository(client, OPERATOR_ID).list_inquiries(
         search="교환",
         status=InquiryStatus.ACTION_REQUIRED,
         intent=InquiryIntent.EXCHANGE,
@@ -104,6 +109,12 @@ def test_list_inquiries_applies_filters_pagination_and_global_status_counts() ->
     assert response.status_counts.ACTION_REQUIRED == 4
     assert client.table_name == "inquiries"
     assert client.rpc_name == "get_inquiry_status_counts"
+    assert client.rpc_params == {"p_operator_id": str(OPERATOR_ID)}
+    assert (
+        "eq",
+        "gmail_connections.operator_id",
+        str(OPERATOR_ID),
+    ) in client.list_query.operations
     assert ("eq", "status", "ACTION_REQUIRED") in client.list_query.operations
     assert ("eq", "intent", "EXCHANGE") in client.list_query.operations
     assert ("order", "received_at", True) in client.list_query.operations
@@ -130,7 +141,11 @@ def test_list_inquiries_escapes_search_pattern_characters() -> None:
         ),
     )
 
-    InquiryRepository(client).list_inquiries(search='50%,_"\\', page=1, page_size=5)
+    InquiryRepository(client, OPERATOR_ID).list_inquiries(
+        search='50%,_"\\',
+        page=1,
+        page_size=5,
+    )
 
     search_operation = next(
         operation for operation in client.list_query.operations if operation[0] == "or"
